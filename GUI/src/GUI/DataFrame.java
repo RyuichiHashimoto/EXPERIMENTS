@@ -93,12 +93,12 @@ public class DataFrame extends JFrame implements GUIInterface {
 
 	public static void main(String[] args) {
 		try {
-			new DataFrame("FinalFUN1.dat");
+			new DataFrame("FinalFUN1_.dat");
 		} catch (IOException e) {
 			new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found FinalFUN1.dat");
-
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
+		System.out.println("ERROR");
 
 	}
 

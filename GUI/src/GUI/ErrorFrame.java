@@ -24,9 +24,10 @@ import javax.swing.border.BevelBorder;
 public class ErrorFrame extends JFrame implements GUIInterface{
 
 	//This variable is for the font used in ErrorMassage
-	public static final Font ERRORFONT = new Font("MS ゴシック",Font.BOLD,16);
+	public static final Font ERRORFONT = new Font("ARIAL",Font.BOLD,16);
+	public static final Font TITLEFONT = new Font("ARIAL",Font.BOLD,16);
 
-	protected String fileContent;
+	
 	protected String filePath;
 	protected JLabel contents;
 	protected String frameTitle;
@@ -51,16 +52,10 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 		initTitleLabel(errorTitle);
 		
 		initComponet();
-		//setContent(errorMassage_);
 		
 		
-		getContentPane().add(jpanel, BorderLayout.NORTH);
-		contents = new JLabel(fileContent);
-		contents.setFont(ERRORFONT);
-
-		JTextArea area = new JTextArea(10,20);
-		area.setBackground(new Color(200,200,200));
-
+		getContentPane().add(jpanel);
+	
 		setVisible(true);
 	}
 
@@ -73,13 +68,13 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 	}
 	private void initComponet(){ 
 		contentArea = new JTextArea();
-		contentArea.setBackground(new Color(110, 110, 110));
-
+		contentArea.setBackground(new Color(150, 150, 150));
+		contentArea.setForeground(Color.red);
 		JScrollPane scrollpanel = new JScrollPane(contentArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
-		contentArea.setText(fileContent);
+		contentArea.setText(errorMassage);
 		contentArea.setEditable(false);
+		
 		jpanel.add(scrollpanel);
 	}
 	
