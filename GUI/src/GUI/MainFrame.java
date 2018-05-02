@@ -3,42 +3,52 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MainFrame extends JFrame implements GUIInterface{
+public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 
+	protected JLabel label;
 
 	public MainFrame(){
+		
 		settingWindow();
+		
 		setTitle();
+		
 		setIcon();
-		//JTextField textfield = new JTextField("蛻晄悄蛟､");
+		
+		
 		JPanel panel1 = new JPanel();
-		JButton btn1 = new JButton("RUN");
+		JButton btn1 = new JButton("+");
 
 		btn1.setVerticalAlignment(btn1.CENTER);
 		btn1.setPreferredSize(BOTTUNSIZE);
 		panel1.add(btn1);
 		panel1.setBounds(100,100,100,100);
-
-		btn1.addActionListener(new ActionListener() {
+	
+		btn1.addActionListener(this);
+		
+/*		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new DataFrame("FinalFUN1.dat");
+					new DataFrame("FinalFUN.dat");
+					
 				} catch (IOException e1) {
 					new ErrorFrame(IOERRORTITLE ,"Sorry, I cannot found FinalFUN1.dat");
-					e1.printStackTrace();
+				//	logger
 				}
 			}
 		});
-		getContentPane().add(panel1,BorderLayout.WEST);
+*/		getContentPane().add(panel1,BorderLayout.WEST);
 	}
 
 	public void setTitle(){
@@ -66,6 +76,20 @@ public class MainFrame extends JFrame implements GUIInterface{
 		MainFrame gui = new MainFrame();
 		gui.setVisible(true);
 		System.out.println("string valueof ");
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		JFileChooser filechooser = new JFileChooser();
+		 int selected = filechooser.showOpenDialog(this);
+		    if (selected == JFileChooser.APPROVE_OPTION){
+		      File file = filechooser.getSelectedFile();
+		      label.setText(file.getName());
+		    }else if (selected == JFileChooser.CANCEL_OPTION){
+		      label.setText("キャンセルされました");
+		    }else if (selected == JFileChooser.ERROR_OPTION){
+		      label.setText("エラー又は取消しがありました");
+		    }
 	}
 
 }

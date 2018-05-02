@@ -53,7 +53,6 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 		
 		initComponet();
 		
-		
 		getContentPane().add(jpanel);
 	
 		setVisible(true);
@@ -80,7 +79,7 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 	
 	public void settingErrorWindow(){
 		//Specifing the behabior of ...;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		// set size and position of this application
 		setBounds(100,100,WINDOWHEIGHT/2,WINDOWWIDTH/2);
 		// set the background color
