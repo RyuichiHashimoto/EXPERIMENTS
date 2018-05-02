@@ -35,8 +35,7 @@ public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 		panel1.setBounds(100,100,100,100);
 	
 		btn1.addActionListener(this);
-		
-/*		btn1.addActionListener(new ActionListener() {
+		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -48,7 +47,7 @@ public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 				}
 			}
 		});
-*/		getContentPane().add(panel1,BorderLayout.WEST);
+		getContentPane().add(panel1,BorderLayout.WEST);
 	}
 
 	public void setTitle(){
@@ -79,11 +78,12 @@ public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) { 
 		JFileChooser filechooser = new JFileChooser();
 		 int selected = filechooser.showOpenDialog(this);
 		    if (selected == JFileChooser.APPROVE_OPTION){
 		      File file = filechooser.getSelectedFile();
+		      label = new JLabel();
 		      label.setText(file.getName());
 		    }else if (selected == JFileChooser.CANCEL_OPTION){
 		      label.setText("ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½");
