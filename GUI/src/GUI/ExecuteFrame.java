@@ -43,6 +43,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		title = new JLabel(filePath);
 		
+		
+		
 		filePath = filePath_;
 		fileContent = FileReader.FileReading(filePath);
 

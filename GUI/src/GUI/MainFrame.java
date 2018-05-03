@@ -6,14 +6,16 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
 
-public class MainFrame extends JFrame implements GUIInterface,ActionListener{
+public class MainFrame extends JFrame implements GUIInterface{
 
 	protected JLabel label;
 
@@ -25,21 +27,22 @@ public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 		
 		setIcon();
 		
-		
-		JPanel panel1 = new JPanel();
+		JPanel mainPanel = new JPanel();
 		JButton btn1 = new JButton("+");
-
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
+		mainPanel.setBorder(border);
+		
 		btn1.setVerticalAlignment(btn1.CENTER);
 		btn1.setPreferredSize(BOTTUNSIZE);
-		panel1.add(btn1);
-		panel1.setBounds(100,100,100,100);
+		mainPanel.add(btn1);
+		mainPanel.setBounds(100,100,100,100);
 	
-		btn1.addActionListener(this);
 		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new DataFrame("FinalFUN.dat");
+					new DataFrame("FinalFUN1.dat");
 					
 				} catch (IOException e1) {
 					new ErrorFrame(IOERRORTITLE ,"Sorry, I cannot found FinalFUN1.dat");
@@ -47,7 +50,7 @@ public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 				}
 			}
 		});
-		getContentPane().add(panel1,BorderLayout.WEST);
+		getContentPane().add(mainPanel,BorderLayout.WEST);
 	}
 
 	public void setTitle(){
@@ -71,25 +74,11 @@ public class MainFrame extends JFrame implements GUIInterface,ActionListener{
 		setIconImage(new ImageIcon(ICONPATH).getImage());
 	}
 
+
 	public static void main(String[] args) {
 		MainFrame gui = new MainFrame();
 		gui.setVisible(true);
 		System.out.println("string valueof ");
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) { 
-		JFileChooser filechooser = new JFileChooser();
-		 int selected = filechooser.showOpenDialog(this);
-		    if (selected == JFileChooser.APPROVE_OPTION){
-		      File file = filechooser.getSelectedFile();
-		      label = new JLabel();
-		      label.setText(file.getName());
-		    }else if (selected == JFileChooser.CANCEL_OPTION){
-		      label.setText("キャンセルされました");
-		    }else if (selected == JFileChooser.ERROR_OPTION){
-		      label.setText("エラー又は取消しがありました");
-		    }
 	}
 
 }

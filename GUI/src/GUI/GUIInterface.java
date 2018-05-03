@@ -12,7 +12,6 @@ public interface GUIInterface {
 	public static final Dimension BOTTUNSIZE = new Dimension(100,20);
 	public static final Dimension TITLESIZE = new Dimension(2,2);
 
-	
 	public static final int DEFAULT_X_POSITION = 100;
 	public static final int DEFAULT_Y_POSITION = 100;
 	
