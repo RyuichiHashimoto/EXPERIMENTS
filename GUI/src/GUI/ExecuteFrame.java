@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -14,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Util.FileReader;
@@ -56,18 +56,22 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		filePath = filePath_;
 		fileContent = FileReader.FileReading(filePath);
 		initTitleLabel();
+		initSettingPanel();
 
-		initButton();
-
-		// initComponet();
+		initComponet();
 
 		// getContentPane().add(TitlejPanel);
 
 		setVisible(true);
 	}
 
-	private void initButton() {
-
+	private void initComponet() {
+		
+		JPanel jpnep = new JPanel();
+		jpnep.setBackground(Color.white);
+		jpnep.setLayout(new BorderLayout());
+		mainPanel.add(jpnep);
+		
 	}
 
 	private void initlizePanel() {
@@ -77,19 +81,37 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		getContentPane().add(mainPanel);
 	}
 
-	private void initComponet() {
+	private void initSettingPanel(){
+		
+		//Initialzation of the Setting panel
+		SettingPanel = new JPanel(null);
+		SettingPanel.setBackground(BACKGROUNDCOLOR);
+		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
+		
+		//initialization of the Steting Label
+		filePathLabel = new JLabel(filePath);
+		filePathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		filePathLabel.setFont(TITLEFONT);
+		filePathLabel.setForeground(Color.black);
+		SettingPanel.add(filePathLabel, TITLESIZE);
 
-		contentArea = new JTextArea();
-		contentArea.setBackground(new Color(110, 110, 110));
-
-		JScrollPane scrollpanel = new JScrollPane(contentArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-		contentArea.setText(fileContent);
-		contentArea.setEditable(false);
-		mainPanel.add(scrollpanel);
-		// getContentPane().add(scrollpanel);
-		// jpanel.add(scrollpanel);
+		// add the right-side button
+		SCButton = new JButton("Show the settings");
+		SCButton.setPreferredSize(new Dimension(150, 40));
+		SCButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DataFrame(filePath);
+				} catch (IOException e1) {
+					new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found " + filePath);
+				}
+			}
+		});
+		SettingPanel.add(SCButton, TITLESIZE);
+		
+		
+		mainPanel.add(SettingPanel);
 	}
 
 	private void initTitleLabel() {
@@ -102,35 +124,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		titleLabel.setFont(TITLEFONT);
 		titleLabel.setForeground(Color.black);
 		TitlejPanel.add(titleLabel, TITLESIZE);
-
-		SettingPanel = new JPanel(null);
-		SettingPanel.setBackground(BACKGROUNDCOLOR);
-		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
-
-		filePathLabel = new JLabel(filePath);
-		filePathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		filePathLabel.setFont(TITLEFONT);
-		filePathLabel.setForeground(Color.black);
-		SettingPanel.add(filePathLabel, TITLESIZE);
-
-		SCButton = new JButton("Show the settings");
-		SCButton.setPreferredSize(new Dimension(150, 40));
-		SCButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					new DataFrame(filePath);
-				} catch (IOException e1) {
-					new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found " + filePath);
-					// logger
-				}
-			}
-		});
-
-		SettingPanel.add(SCButton, TITLESIZE);
-
 		mainPanel.add(TitlejPanel);
-		mainPanel.add(SettingPanel);
+
 
 	}
 
@@ -157,5 +152,11 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	private void setIcon() {
 		setIconImage(new ImageIcon(ICONPATH).getImage());
 
+	}
+
+	
+	//プログラムを実装予定
+	public void run(){
+		//実装予定なため
 	}
 }

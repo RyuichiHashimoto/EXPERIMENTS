@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -11,55 +10,71 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 
 public class MainFrame extends JFrame implements GUIInterface{
 
 	protected JLabel label;
+	protected JPanel mainPanel;
+
 
 	public MainFrame(){
 
 		settingWindow();
 
-		setTitle();
-
 		setIcon();
 
-		JPanel mainPanel = new JPanel();
-		JButton btn1 = new JButton("+");
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
-		mainPanel.setBorder(border);
+		setMainPanel();
+
+		setTitle();
+
+		setRunBottuon();
+
+	}
+
+	private void setRunBottuon() {
+		JPanel buttonPanel = new JPanel();
+		JButton btn1 = new JButton("test button");
 
 		btn1.setVerticalAlignment(btn1.CENTER);
 		btn1.setPreferredSize(BOTTUNSIZE);
-		mainPanel.add(btn1);
-		mainPanel.setBounds(100,100,100,100);
+		buttonPanel.add(btn1);
+
+//		buttonPanel.setBounds(100,100,100,100);
 
 		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					new DataFrame("FinalFUN1.dat");
 
+					new ExecuteFrame("FinalFUN1.dat").run();
 				} catch (IOException e1) {
 					new ErrorFrame(IOERRORTITLE ,"Sorry, I cannot found FinalFUN1.dat");
 				//	logger
 				}
 			}
 		});
-		getContentPane().add(mainPanel,BorderLayout.WEST);
+		mainPanel.add(buttonPanel);
 	}
 
-	public void setTitle(){
+	private void setMainPanel() {
+		mainPanel = new JPanel(null);
+		mainPanel.setBackground(BACKGROUNDCOLOR);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		getContentPane().add(mainPanel);
+	}
+
+	private void setTitle(){
+		JPanel titlePanel = new JPanel();
 		JLabel title = new JLabel(TITLELABEL);
 		title.setFont(TITLEFONT);
 		title.setHorizontalAlignment(JLabel.CENTER);
 		title.setVerticalAlignment(JLabel.TOP);
-		add(title);
+		titlePanel.add(title);
+		titlePanel.setBackground(BACKGROUNDCOLOR);
+		mainPanel.add(titlePanel);
 	}
 
-	public void settingWindow(){
+	private void settingWindow(){
 		//Specifing the behabior of ...;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// set size and position of this application
@@ -68,10 +83,9 @@ public class MainFrame extends JFrame implements GUIInterface{
 		getContentPane().setBackground(BACKGROUNDCOLOR);
 	}
 
-	public void setIcon(){
+	private void setIcon(){
 		setIconImage(new ImageIcon(ICONPATH).getImage());
 	}
-
 
 	public static void main(String[] args) {
 		MainFrame gui = new MainFrame();
