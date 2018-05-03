@@ -110,6 +110,5 @@ public class DataFrame extends JFrame implements GUIInterface {
 
 	private void setIcon(){
 		setIconImage(new ImageIcon(ICONPATH).getImage());
-
 	}
 }

@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -27,45 +26,45 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 	public static final Font ERRORFONT = new Font("ARIAL",Font.BOLD,16);
 	public static final Font TITLEFONT = new Font("ARIAL",Font.BOLD,16);
 
-	
+
 	protected String filePath;
 	protected JLabel contents;
 	protected String frameTitle;
 
-	private JLabel titleLabel;	
+	private JLabel titleLabel;
 	private JLabel contentLabel;
 
 	protected String errorTitle;
 	protected String errorMassage;
 	JTextArea contentArea;
 	private JPanel jpanel;
-	
+
 	public ErrorFrame(String  errorTitle_,String errorMassage_){
 		errorTitle = errorTitle_;
 		errorMassage = errorMassage_;
 
 		settingErrorWindow();
 		setIcon();
-		
+
 		initlizePanel();
-		
+
 		initTitleLabel(errorTitle);
-		
+
 		initComponet();
-		
+
 		getContentPane().add(jpanel);
-	
+
 		setVisible(true);
 	}
 
-	private void initlizePanel(){ 
+	private void initlizePanel(){
 		jpanel = new JPanel(null);
 		jpanel.setBackground(BACKGROUNDCOLOR);
 		jpanel.setLayout(new BoxLayout(jpanel, BoxLayout.Y_AXIS));
 		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
 		jpanel.setBorder(border);
 	}
-	private void initComponet(){ 
+	private void initComponet(){
 		contentArea = new JTextArea();
 		contentArea.setBackground(new Color(150, 150, 150));
 		contentArea.setForeground(Color.red);
@@ -73,10 +72,10 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		contentArea.setText(errorMassage);
 		contentArea.setEditable(false);
-		
+
 		jpanel.add(scrollpanel);
 	}
-	
+
 	public void settingErrorWindow(){
 		//Specifing the behabior of ...;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -92,12 +91,12 @@ public class ErrorFrame extends JFrame implements GUIInterface{
 		contentLabel.setForeground(Color.red);
 		contentLabel.setHorizontalAlignment(JLabel.CENTER);
 		contentLabel.setVerticalAlignment(JLabel.BOTTOM);
-		
+
 //		getContentPane().add(title, BorderLayout.NORTH);
 		add(contentLabel);
 	}
 
-	private void initTitleLabel(String TitleLabel){ 
+	private void initTitleLabel(String TitleLabel){
 		titleLabel = new JLabel(TitleLabel);
 		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		titleLabel.setFont(TITLEFONT);

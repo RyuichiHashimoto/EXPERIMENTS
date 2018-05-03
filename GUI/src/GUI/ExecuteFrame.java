@@ -66,12 +66,12 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	}
 
 	private void initComponet() {
-		
+
 		JPanel jpnep = new JPanel();
 		jpnep.setBackground(Color.white);
 		jpnep.setLayout(new BorderLayout());
 		mainPanel.add(jpnep);
-		
+
 	}
 
 	private void initlizePanel() {
@@ -82,12 +82,12 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	}
 
 	private void initSettingPanel(){
-		
+
 		//Initialzation of the Setting panel
 		SettingPanel = new JPanel(null);
 		SettingPanel.setBackground(BACKGROUNDCOLOR);
 		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
-		
+
 		//initialization of the Steting Label
 		filePathLabel = new JLabel(filePath);
 		filePathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,8 +109,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 			}
 		});
 		SettingPanel.add(SCButton, TITLESIZE);
-		
-		
+
+
 		mainPanel.add(SettingPanel);
 	}
 
@@ -151,10 +151,9 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	private void setIcon() {
 		setIconImage(new ImageIcon(ICONPATH).getImage());
-
 	}
 
-	
+
 	//プログラムを実装予定
 	public void run(){
 		//実装予定なため

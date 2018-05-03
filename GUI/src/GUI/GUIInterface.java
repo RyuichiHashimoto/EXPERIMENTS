@@ -14,9 +14,11 @@ public interface GUIInterface {
 
 	public static final int DEFAULT_X_POSITION = 100;
 	public static final int DEFAULT_Y_POSITION = 100;
-	
+
 	public static final int WINDOWHEIGHT = 640;
 	public static final int WINDOWWIDTH = 480;
 	public static final String ICONPATH = "./icon.jpg";
+
+
 	public static final String IOERRORTITLE = "IO Error";
 }
