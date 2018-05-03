@@ -19,6 +19,7 @@ public interface GUIInterface {
 	public static final int WINDOWWIDTH = 480;
 	public static final String ICONPATH = "./icon.jpg";
 
-
+	public static final int TextFieldSize = 10;
+	
 	public static final String IOERRORTITLE = "IO Error";
 }

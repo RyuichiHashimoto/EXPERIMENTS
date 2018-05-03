@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -46,6 +47,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	JButton[] DirectoryBotton;
 
 	public ExecuteFrame(String filePath_) throws IOException {
+		filePath = filePath_;
+		fileContent = FileReader.FileReading(filePath);
 
 		settingWindow();
 
@@ -53,9 +56,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		initlizePanel();
 
-		filePath = filePath_;
-		fileContent = FileReader.FileReading(filePath);
 		initTitleLabel();
+
 		initSettingPanel();
 
 		initComponet();
@@ -65,6 +67,29 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		setVisible(true);
 	}
 
+	public ExecuteFrame(List<String> filePath_) throws IOException {
+		filePath = filePath_.get(0);
+		System.out.println(filePath_.get(0));
+		fileContent = FileReader.FileReading(filePath);
+
+		settingWindow();
+
+		setIcon();
+
+		initlizePanel();
+
+		initTitleLabel();
+
+		initSettingPanel();
+
+		initComponet();
+
+		// getContentPane().add(TitlejPanel);
+
+		setVisible(true);
+	}
+
+	
 	private void initComponet() {
 
 		JPanel jpnep = new JPanel();
@@ -154,8 +179,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	}
 
 
-	//プログラムを実装予定
+	//繝励Ο繧ｰ繝ｩ繝�繧貞ｮ溯｣�莠亥ｮ�
 	public void run(){
-		//実装予定なため
+		//螳溯｣�莠亥ｮ壹↑縺溘ａ
 	}
 }
