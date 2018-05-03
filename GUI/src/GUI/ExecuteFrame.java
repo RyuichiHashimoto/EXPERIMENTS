@@ -2,7 +2,10 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
@@ -34,10 +37,11 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	JLabel filePathLabel;
 
 	JPanel TitlejPanel;
+	JPanel SettingPanel;
+
 	JButton SCButton;
 	JPanel mainPanel = new JPanel();
-	
-	
+
 	JTextArea contentArea;
 	JButton[] DirectoryBotton;
 
@@ -47,35 +51,33 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		setIcon();
 
-		
 		initlizePanel();
 
 		filePath = filePath_;
 		fileContent = FileReader.FileReading(filePath);
 		initTitleLabel();
-		
+
 		initButton();
 
-	//	initComponet();
+		// initComponet();
 
-		//getContentPane().add(TitlejPanel);
-		
+		// getContentPane().add(TitlejPanel);
+
 		setVisible(true);
 	}
 
 	private void initButton() {
-		SCButton = new JButton();
-		
+
 	}
 
-	private void initlizePanel(){
+	private void initlizePanel() {
 		mainPanel = new JPanel(null);
 		mainPanel.setBackground(BACKGROUNDCOLOR);
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		getContentPane().add(mainPanel);
 	}
 
-	private void initComponet(){
+	private void initComponet() {
 
 		contentArea = new JTextArea();
 		contentArea.setBackground(new Color(110, 110, 110));
@@ -86,27 +88,50 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		contentArea.setText(fileContent);
 		contentArea.setEditable(false);
 		mainPanel.add(scrollpanel);
-//		getContentPane().add(scrollpanel);
-//		jpanel.add(scrollpanel);
+		// getContentPane().add(scrollpanel);
+		// jpanel.add(scrollpanel);
 	}
-	
-	private void initTitleLabel(){
+
+	private void initTitleLabel() {
 		TitlejPanel = new JPanel(null);
 		TitlejPanel.setBackground(BACKGROUNDCOLOR);
 		TitlejPanel.setLayout(new BoxLayout(TitlejPanel, BoxLayout.Y_AXIS));
-		
+
 		titleLabel = new JLabel(TITLESTRING);
 		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		titleLabel.setFont(TITLEFONT);
 		titleLabel.setForeground(Color.black);
-		TitlejPanel.add(titleLabel, TITLESIZE);		
-		filePathLabel = new JLabel(filePath);		
+		TitlejPanel.add(titleLabel, TITLESIZE);
+
+		SettingPanel = new JPanel(null);
+		SettingPanel.setBackground(BACKGROUNDCOLOR);
+		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
+
+		filePathLabel = new JLabel(filePath);
 		filePathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		filePathLabel.setFont(TITLEFONT);
 		filePathLabel.setForeground(Color.black);
-		TitlejPanel.add(filePathLabel, TITLESIZE);
-		
+		SettingPanel.add(filePathLabel, TITLESIZE);
+
+		SCButton = new JButton("Show the settings");
+		SCButton.setPreferredSize(new Dimension(150, 40));
+		SCButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new DataFrame(filePath);
+				} catch (IOException e1) {
+					new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found " + filePath);
+					// logger
+				}
+			}
+		});
+
+		SettingPanel.add(SCButton, TITLESIZE);
+
 		mainPanel.add(TitlejPanel);
+		mainPanel.add(SettingPanel);
+
 	}
 
 	private void settingWindow() {
@@ -120,17 +145,16 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	public static void main(String[] args) {
 		try {
-			new ExecuteFrame("FinalFUN1.dat");
+			new ExecuteFrame("Setting.st");
 		} catch (IOException e) {
 			new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found FinalFUN1.dat");
-//			e.printStackTrace();
+			// e.printStackTrace();
 		}
 		System.out.println("ERROR");
 
 	}
 
-
-	private void setIcon(){
+	private void setIcon() {
 		setIconImage(new ImageIcon(ICONPATH).getImage());
 
 	}

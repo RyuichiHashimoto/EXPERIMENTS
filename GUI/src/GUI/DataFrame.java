@@ -89,7 +89,7 @@ public class DataFrame extends JFrame implements GUIInterface {
 
 	private void settingWindow() {
 		// Specifing the behabior of ...;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		// set size and position of this application
 		setBounds(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, WINDOWHEIGHT, WINDOWWIDTH);
 		// set the background color
