@@ -3,6 +3,8 @@ package GUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.IOException;
 
 import javax.swing.BoxLayout;
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
 
 import Util.FileReader;
 
@@ -31,57 +32,61 @@ public class DataFrame extends JFrame implements GUIInterface {
 	JLabel title;
 	JPanel jpanel;
 	JTextArea contentArea;
+	GridBagLayout girdBagLayout = new GridBagLayout();
+
+	GridBagConstraints gbs;
 
 
 	public DataFrame(String filePath_) throws IOException {
-		
+
 		settingWindow();
 
 		setIcon();
-		
+
 		initlizePanel();
 
 		title = new JLabel(filePath);
-		
+
 		filePath = filePath_;
+//		System.out.println(filePath);
 		fileContent = FileReader.FileReading(filePath);
 
 		initTitleLabel();
-			
+
 		initComponet();
-		
+
 		getContentPane().add(jpanel);
 		setVisible(true);
 	}
 
-	private void initlizePanel(){ 
-		jpanel = new JPanel(null);
-		jpanel.setBackground(BACKGROUNDCOLOR);
+	// initalization of the panel and its layout.
+	private void initlizePanel(){
+		jpanel = new JPanel();
 		jpanel.setLayout(new BoxLayout(jpanel, BoxLayout.Y_AXIS));
-		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
-		jpanel.setBorder(border);
+		gbs = new GridBagConstraints();
 	}
 
-	private void initComponet(){ 
+	private void initComponet(){
 		contentArea = new JTextArea();
 		contentArea.setBackground(new Color(110, 110, 110));
 
 		JScrollPane scrollpanel = new JScrollPane(contentArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
+
 		contentArea.setText(fileContent);
 		contentArea.setEditable(false);
 		jpanel.add(scrollpanel);
 	}
-	
-	private void initTitleLabel(){ 
+
+	private void initTitleLabel(){
 		title = new JLabel(filePath);
 		title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		title.setFont(TITLEFONT);
 		title.setForeground(Color.black);
+
 		jpanel.add(title, TITLESIZE);
 	}
-	
+
 	private void settingWindow() {
 		// Specifing the behabior of ...;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,6 +110,6 @@ public class DataFrame extends JFrame implements GUIInterface {
 
 	private void setIcon(){
 		setIconImage(new ImageIcon(ICONPATH).getImage());
-		
+
 	}
 }

@@ -7,12 +7,12 @@ import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
 
 import Util.FileReader;
 
@@ -26,19 +26,20 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	String fileContent;
 	String filePath;
-	private static final String TITLESTRING = "EXECUTE PROGRAM";
-
+	private static final String TITLESTRING = "EXECUTE MODE";
 	public static final Font CONTENTFONT = new Font("TIMES NEW ROMAN", Font.BOLD, 16);
-
-
 
 	JLabel contents;
 	JLabel titleLabel;
 	JLabel filePathLabel;
 
-	JPanel jpanel;
-	JPanel jpanel_2;
+	JPanel TitlejPanel;
+	JButton SCButton;
+	JPanel mainPanel = new JPanel();
+	
+	
 	JTextArea contentArea;
+	JButton[] DirectoryBotton;
 
 	public ExecuteFrame(String filePath_) throws IOException {
 
@@ -46,32 +47,36 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		setIcon();
 
+		
 		initlizePanel();
-
-
 
 		filePath = filePath_;
 		fileContent = FileReader.FileReading(filePath);
-
 		initTitleLabel();
+		
+		initButton();
 
-		initComponet();
+	//	initComponet();
 
-		getContentPane().add(jpanel);
-		getContentPane().add(jpanel_2);
-
+		//getContentPane().add(TitlejPanel);
+		
 		setVisible(true);
 	}
 
+	private void initButton() {
+		SCButton = new JButton();
+		
+	}
+
 	private void initlizePanel(){
-		jpanel = new JPanel(null);
-		jpanel.setBackground(BACKGROUNDCOLOR);
-		jpanel.setLayout(new BoxLayout(jpanel, BoxLayout.Y_AXIS));
-		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
-		jpanel.setBorder(border);
+		mainPanel = new JPanel(null);
+		mainPanel.setBackground(BACKGROUNDCOLOR);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		getContentPane().add(mainPanel);
 	}
 
 	private void initComponet(){
+
 		contentArea = new JTextArea();
 		contentArea.setBackground(new Color(110, 110, 110));
 
@@ -80,29 +85,28 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		contentArea.setText(fileContent);
 		contentArea.setEditable(false);
-		jpanel.add(scrollpanel);
+		mainPanel.add(scrollpanel);
+//		getContentPane().add(scrollpanel);
+//		jpanel.add(scrollpanel);
 	}
-
+	
 	private void initTitleLabel(){
-
+		TitlejPanel = new JPanel(null);
+		TitlejPanel.setBackground(BACKGROUNDCOLOR);
+		TitlejPanel.setLayout(new BoxLayout(TitlejPanel, BoxLayout.Y_AXIS));
+		
 		titleLabel = new JLabel(TITLESTRING);
 		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		titleLabel.setFont(TITLEFONT);
 		titleLabel.setForeground(Color.black);
-		jpanel.add(titleLabel, TITLESIZE);
-		
-		jpanel_2 = new JPanel(null);
-		jpanel_2.setBackground(Color.WHITE);
-		jpanel_2.setLayout(new BoxLayout(jpanel, BoxLayout.Y_AXIS));
-		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
-		jpanel_2.setBorder(border);
-		
-		filePathLabel = new JLabel(filePath);
+		TitlejPanel.add(titleLabel, TITLESIZE);		
+		filePathLabel = new JLabel(filePath);		
 		filePathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		filePathLabel.setFont(TITLEFONT);
 		filePathLabel.setForeground(Color.black);
-		jpanel_2.add(filePathLabel, TITLESIZE);
-
+		TitlejPanel.add(filePathLabel, TITLESIZE);
+		
+		mainPanel.add(TitlejPanel);
 	}
 
 	private void settingWindow() {

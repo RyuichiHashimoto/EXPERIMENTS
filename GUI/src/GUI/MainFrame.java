@@ -18,30 +18,30 @@ public class MainFrame extends JFrame implements GUIInterface{
 	protected JLabel label;
 
 	public MainFrame(){
-		
+
 		settingWindow();
-		
+
 		setTitle();
-		
+
 		setIcon();
-		
+
 		JPanel mainPanel = new JPanel();
 		JButton btn1 = new JButton("+");
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		BevelBorder border = new BevelBorder(BevelBorder.RAISED);
 		mainPanel.setBorder(border);
-		
+
 		btn1.setVerticalAlignment(btn1.CENTER);
 		btn1.setPreferredSize(BOTTUNSIZE);
 		mainPanel.add(btn1);
 		mainPanel.setBounds(100,100,100,100);
-	
+
 		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					new DataFrame("FinalFUN1.dat");
-					
+
 				} catch (IOException e1) {
 					new ErrorFrame(IOERRORTITLE ,"Sorry, I cannot found FinalFUN1.dat");
 				//	logger
