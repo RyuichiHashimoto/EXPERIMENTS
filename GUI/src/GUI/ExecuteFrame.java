@@ -57,7 +57,6 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		initComponet();
 
-
 		getContentPane().add(jpanel);
 		getContentPane().add(jpanel_2);
 
@@ -91,7 +90,6 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		titleLabel.setFont(TITLEFONT);
 		titleLabel.setForeground(Color.black);
 		jpanel.add(titleLabel, TITLESIZE);
-		
 		
 		jpanel_2 = new JPanel(null);
 		jpanel_2.setBackground(Color.WHITE);
