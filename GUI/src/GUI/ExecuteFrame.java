@@ -30,6 +30,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	String fileContent;
 	String filePath;
+	
 	private static final String TITLESTRING = "EXECUTE MODE";
 	public static final Font CONTENTFONT = new Font("TIMES NEW ROMAN", Font.BOLD, 16);
 
@@ -62,16 +63,20 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		initComponet();
 
-		// getContentPane().add(TitlejPanel);
-
+		initRunButton();
+		
 		setVisible(true);
 	}
 
-	public ExecuteFrame(List<String> filePath_) throws IOException {
-		filePath = filePath_.get(0);
+	public ExecuteFrame(List<String> filePath_) {
+	
 		System.out.println(filePath_.get(0));
+		//System.out.println(filePath_.get(1));
+		
+		filePath = filePath_.get(0);
+		
 		fileContent = FileReader.FileReading(filePath);
-
+	
 		settingWindow();
 
 		setIcon();
@@ -79,17 +84,35 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		initlizePanel();
 
 		initTitleLabel();
-
+		
 		initSettingPanel();
-
+			
 		initComponet();
 
-		// getContentPane().add(TitlejPanel);
-
+		initRunButton();
+		
 		setVisible(true);
 	}
 
 	
+	private void initRunButton() {
+		JPanel runButtonPanel = new JPanel();
+		JButton runButton = new JButton("run program");
+		runButtonPanel.add(runButton);
+		
+		runButton.setPreferredSize(new Dimension(150, 40));
+		runButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+			}
+		});
+		
+		mainPanel.add(runButtonPanel);
+	}
+
 	private void initComponet() {
 
 		JPanel jpnep = new JPanel();
@@ -150,13 +173,11 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		titleLabel.setForeground(Color.black);
 		TitlejPanel.add(titleLabel, TITLESIZE);
 		mainPanel.add(TitlejPanel);
-
-
 	}
 
 	private void settingWindow() {
 		// Specifing the behabior of ...;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		// set size and position of this application
 		setBounds(DEFAULT_X_POSITION, DEFAULT_Y_POSITION, WINDOWHEIGHT, WINDOWWIDTH);
 		// set the background color

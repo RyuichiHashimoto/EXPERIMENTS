@@ -26,6 +26,8 @@ public class MainFrame extends JFrame implements GUIInterface {
 	private JTextArea textArea;
 	List<String> commandList;
 
+	List<JButton> settingButton;
+	
 	public MainFrame() {
 
 		initClassVariable();
@@ -46,30 +48,19 @@ public class MainFrame extends JFrame implements GUIInterface {
 
 	private void initClassVariable() {
 		commandList = new ArrayList<String>();
+		settingButton = new ArrayList<JButton>();
 	}
 
 	private void setAddBotton() {
 		JPanel buttonPanel = new JPanel();
 		textArea = new JTextArea();
 		textArea.setBackground(BACKGROUNDCOLOR);
-		JTextField textField = new JTextField(TextFieldSize);
 
-		// Initialization of button
-		JButton btn1 = new JButton("Add Command");
-		btn1.setVerticalAlignment(btn1.CENTER);
-		btn1.setPreferredSize(BOTTUNSIZE);
-		btn1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		// add the button and text field in this panel
-		buttonPanel.add(textField);
-		buttonPanel.add(btn1);
 		buttonPanel.setTransferHandler(new DropFileHandler());
 		buttonPanel.setBackground(BACKGROUNDCOLOR);
 		buttonPanel.add(textArea);
+		textArea.setEditable(false);
+		
 		// add this panel to main panel.
 		mainPanel.add(buttonPanel);
 
@@ -86,12 +77,13 @@ public class MainFrame extends JFrame implements GUIInterface {
 		btn1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					new ExecuteFrame(commandList).run();
-				} catch (IOException e1) {
-					new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found FinalFUN1.dat");
+				new ExecuteFrame(commandList).run();
+
+//				try {
+//				} catch (IOException e1) {
+	//				new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found FinalFUN1.dat");
 					// logger
-				}
+	//			}
 			}
 		});
 		mainPanel.add(buttonPanel);
@@ -183,7 +175,7 @@ public class MainFrame extends JFrame implements GUIInterface {
 				}
 
 				// テキストエリアにファイル名のリストを表示する
-				textArea.setText(fileList.toString());
+				textArea.setText(textArea.getText()+fileList.toString());
 				
 			} catch (UnsupportedFlavorException | IOException e) {
 				e.printStackTrace();

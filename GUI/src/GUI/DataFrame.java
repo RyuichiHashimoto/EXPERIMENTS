@@ -48,7 +48,7 @@ public class DataFrame extends JFrame implements GUIInterface {
 		title = new JLabel(filePath);
 
 		filePath = filePath_;
-//		System.out.println(filePath);
+
 		fileContent = FileReader.FileReading(filePath);
 
 		initTitleLabel();
