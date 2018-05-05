@@ -17,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import Network.NetworkConstants;
 import Util.FileReader;
 import constants.ExeConstants;
 import constants.FileConstants;
+import constants.NetworkConstants;
 
 /*
  * Data Fram
@@ -38,7 +38,15 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	private List<String> filePaths;
 	private Long WaitTime = (long) 500;
-	private String MainPC_OSVersion = "null";
+	private String mainPC_OSVersion = "null";
+	private String userName = "null";
+	private String password = "null";
+	private String exeJarFile = "null";
+	private String MasterSetting = "null";
+
+
+	private String PClistFile = "REMOTEPCLIST.ini";
+
 	JLabel contents;
 	JLabel titleLabel;
 	JLabel filePathLabel;
@@ -53,6 +61,10 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	JButton[] DirectoryBotton;
 
 	String StatusStr = "label";
+
+	String ExecuterScript = "null";
+
+	String masterExecuterScript = "null";
 
 	public ExecuteFrame(String filePath_) throws IOException {
 		readSettingFile();
@@ -134,12 +146,29 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 			List<String> ret = FileReader.FileReadingAsArray(ExeConstants.SETTING_FILE);
 			mainPC = ret.get(0).split(FileConstants.SETTING_FILE_DELIMITER)[1];
-			MainPC_OSVersion = ret.get(1).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			mainPC_OSVersion = ret.get(1).split(FileConstants.SETTING_FILE_DELIMITER)[1];
 			mainScript = ret.get(2).split(FileConstants.SETTING_FILE_DELIMITER)[1];
-
+			userName = ret.get(3).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			password = ret.get(4).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			exeJarFile = ret.get(5).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			MasterSetting = ret.get(6).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			masterExecuterScript = ret.get(7).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			System.out.println(masterExecuterScript);
 		} catch (IOException e) {
 			mainPC = null;
 		}
+	}
+
+	private void SocketTransfer(Runtime r,String filename) throws IOException, InterruptedException{
+		SocketTransfer(r,filename,filename);
+	}
+
+	private void SocketTransfer(Runtime r,String sendedname,String outputfile) throws IOException, InterruptedException{
+		r.exec("sh  " + mainScript + " " + mainPC + " " + outputfile);
+		Thread.sleep(WaitTime);
+		String safe = NetworkConstants.sendFile(sendedname,mainPC);
+		Thread.sleep(WaitTime);
+		System.out.println(safe);
 	}
 
 	private void initRunButton() {
@@ -155,22 +184,34 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 					Runtime r = Runtime.getRuntime();
 					StatusStr = "EXECUTE";
 					StatusLabel.setText(StatusStr);
-					System.out.println(filePaths.size());
 
+					if (mainPC_OSVersion.toLowerCase().startsWith("win")) {
+						for (int i = 0; i < filePaths.size(); i++) {
 
-
-					//
-					for(int i = 0; i < filePaths.size() ; i++){
-
-						if (MainPC_OSVersion.equalsIgnoreCase("win")){
-							r.exec("./PsExec.exe" + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
-
-						} else  if (MainPC_OSVersion.equalsIgnoreCase("lin")){
-							r.exec("sh  " + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
-							Thread.sleep(WaitTime);
-							NetworkConstants.sendFile(filePaths.get(i),mainPC);
-							Thread.sleep(WaitTime);
 						}
+					} else if (mainPC_OSVersion.toLowerCase().startsWith("lin")) {
+
+						//Transfer command list
+						for (int i = 0; i < filePaths.size(); i++) {
+	//						SocketTransfer(r,filePaths.get(i) ,"command" + String.valueOf(i + 1)+ ".ini");
+//							System.out.println(filePaths.get(i));
+//filePaths.get(i)							SocketTransfer(r,filePaths.get(i) ,"command" + String.valueOf(i + 1)+ ".ini");
+
+						}
+
+						SocketTransfer(r, exeJarFile);
+
+						SocketTransfer(r, PClistFile);
+
+//						System.out.println(MasterSetting);
+
+						SocketTransfer(r, MasterSetting);
+
+						SocketTransfer(r, masterExecuterScript);
+
+
+						r.exec("ssh  " + mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh bishop.cs.osakafu-u.ac.jp'");
+						System.out.println("ssh  " + mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh'");
 
 					}
 
