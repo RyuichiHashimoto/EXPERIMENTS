@@ -163,8 +163,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 					for(int i = 0; i < filePaths.size() ; i++){
 
 						if (MainPC_OSVersion.equalsIgnoreCase("win")){
-
-
+							r.exec("./PsExec.exe" + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
 
 						} else  if (MainPC_OSVersion.equalsIgnoreCase("lin")){
 							r.exec("sh  " + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
