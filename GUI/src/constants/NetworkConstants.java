@@ -1,4 +1,4 @@
-package Network;
+package constants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,7 +40,6 @@ public class NetworkConstants {
 
 		try {
 			serverSocket = new ServerSocket(PORT_NUMBER);
-			System.out.println("you can do it in revieve");
 
 			socket = serverSocket.accept();
 			inputStream = socket.getInputStream();
@@ -78,6 +77,7 @@ public class NetworkConstants {
 		OutputStream outputStream = null;
 
 		try {
+
 			socket = new Socket(hostName,PORT_NUMBER);
 
 			inputStream = new FileInputStream(file);
@@ -92,7 +92,8 @@ public class NetworkConstants {
 			inputStream.close();
 			socket.close();
 
-		} catch (IOException e) {
+		} catch (IOException e){
+
 			return ERROR_STATUS;
 		}
 		return SUCCESS_STATUS;
@@ -102,7 +103,7 @@ public class NetworkConstants {
 		return sendFile(new File(filepath),hostName);
 	}
 
-	public static String sendMassage(String massage, String hostName) {
+	public static String sendMassage(String massage, String hostName) { 
 		return null;
 	}
 /*

@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 
 public class MainFrame extends JFrame implements GUIInterface {
@@ -27,7 +26,7 @@ public class MainFrame extends JFrame implements GUIInterface {
 	List<String> commandList;
 
 	List<JButton> settingButton;
-	
+
 	public MainFrame() {
 
 		initClassVariable();
@@ -60,7 +59,7 @@ public class MainFrame extends JFrame implements GUIInterface {
 		buttonPanel.setBackground(BACKGROUNDCOLOR);
 		buttonPanel.add(textArea);
 		textArea.setEditable(false);
-		
+
 		// add this panel to main panel.
 		mainPanel.add(buttonPanel);
 
@@ -78,25 +77,19 @@ public class MainFrame extends JFrame implements GUIInterface {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new ExecuteFrame(commandList).run();
-
-//				try {
-//				} catch (IOException e1) {
-	//				new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found FinalFUN1.dat");
-					// logger
-	//			}
 			}
 		});
 		mainPanel.add(buttonPanel);
 	}
 
 	private void setMainPanel() {
-		
-		// initialize the main panel 
+
+		// initialize the main panel
 		mainPanel = new JPanel(null);
 		mainPanel.setBackground(BACKGROUNDCOLOR);
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.setTransferHandler(new DropFileHandler());
-		
+
 		getContentPane().add(mainPanel);
 	}
 
@@ -132,51 +125,51 @@ public class MainFrame extends JFrame implements GUIInterface {
 
 	public class DropFileHandler extends TransferHandler {
 		/**
-		 * ƒhƒƒbƒv‚³‚ê‚½‚à‚Ì‚ğó‚¯æ‚é‚©”»’f (ƒtƒ@ƒCƒ‹‚Ì‚Æ‚«‚¾‚¯ó‚¯æ‚é)
+		 * ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ó‚¯ï¿½é‚©ï¿½ï¿½ï¿½f (ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì‚Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó‚¯ï¿½ï¿½)
 		 */
 		@Override
 		public boolean canImport(TransferSupport support) {
 			if (!support.isDrop()) {
-				// ƒhƒƒbƒv‘€ì‚Å‚È‚¢ê‡‚Íó‚¯æ‚ç‚È‚¢
+				// ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ê‡ï¿½Íó‚¯ï¿½ï¿½È‚ï¿½
 				return false;
 			}
 
 			if (!support.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-				// ƒhƒƒbƒv‚³‚ê‚½‚Ì‚ªƒtƒ@ƒCƒ‹‚Å‚È‚¢ê‡‚Íó‚¯æ‚ç‚È‚¢
+				// ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ê‚½ï¿½Ì‚ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Å‚È‚ï¿½ï¿½ê‡ï¿½Íó‚¯ï¿½ï¿½È‚ï¿½
 				return false;
 			}
-			
+
 			return true;
 		}
 
 		/**
-		 * ƒhƒƒbƒv‚³‚ê‚½ƒtƒ@ƒCƒ‹‚ğó‚¯æ‚é
+		 * ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ê‚½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ó‚¯ï¿½ï¿½
 		 */
 		@Override
 		public boolean importData(TransferSupport support) {
-			// ó‚¯æ‚Á‚Ä‚¢‚¢‚à‚Ì‚©Šm”F‚·‚é
+			// ï¿½ó‚¯ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½ï¿½
 			if (!canImport(support)) {
 				return false;
 			}
 
-			// ƒhƒƒbƒvˆ—
+			// ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½
 			Transferable t = support.getTransferable();
 			try {
-				// ƒtƒ@ƒCƒ‹‚ğó‚¯æ‚é
+				// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ó‚¯ï¿½ï¿½
 				List<File> files = (List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
 
-				// ƒeƒLƒXƒgƒGƒŠƒA‚É•\¦‚·‚éƒtƒ@ƒCƒ‹–¼ƒŠƒXƒg‚ğì¬‚·‚é
+				// ï¿½eï¿½Lï¿½Xï¿½gï¿½Gï¿½ï¿½ï¿½Aï¿½É•\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½
 				StringBuffer fileList = new StringBuffer();
-				
+
 				for (File file : files) {
 					fileList.append(file.getName());
 					fileList.append("\n");
 					commandList.add(file.getPath());
 				}
 
-				// ƒeƒLƒXƒgƒGƒŠƒA‚Éƒtƒ@ƒCƒ‹–¼‚ÌƒŠƒXƒg‚ğ•\¦‚·‚é
+				// ï¿½eï¿½Lï¿½Xï¿½gï¿½Gï¿½ï¿½ï¿½Aï¿½Éƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				textArea.setText(textArea.getText()+fileList.toString());
-				
+
 			} catch (UnsupportedFlavorException | IOException e) {
 				e.printStackTrace();
 			}
