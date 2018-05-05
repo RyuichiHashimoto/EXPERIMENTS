@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -70,7 +69,7 @@ public class NetworkConstants {
 	}
 
 	// this is the client method
-	public static String sendFile(File file,String hostName){ 
+	public static String sendFile(File file,String hostName){
 		byte[] buffer = new byte[BUFFER_SIZE];
 		Socket socket = null;
 		System.out.println("start");
@@ -99,16 +98,16 @@ public class NetworkConstants {
 		return SUCCESS_STATUS;
 	}
 
-	public static String sendFile(String filepath, String hostName) { 
+	public static String sendFile(String filepath, String hostName) {
 		return sendFile(new File(filepath),hostName);
 	}
 
 	public static String sendMassage(String massage, String hostName) {
 		return null;
 	}
-
+/*
 	public static String sendObject(Object object, String hostName) {
-		
+
 		byte[] buffer = new byte[BUFFER_SIZE];
 		Socket socket = null;
 		System.out.println("start");
@@ -135,16 +134,12 @@ public class NetworkConstants {
 			return ERROR_STATUS;
 		}
 		return SUCCESS_STATUS;
-
-
-		
 	}
+	*/
 
-	
+
 	public static String receiveingMassage(File file){
 		return null;
 	}
-
-	public static
 
 }

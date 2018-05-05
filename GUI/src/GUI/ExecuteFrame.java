@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -19,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import Util.FileReader;
+import constants.ExeConstants;
+import constants.FileConstants;
 
 /*
  * Data Fram
@@ -28,14 +29,10 @@ import Util.FileReader;
 
 public class ExecuteFrame extends JFrame implements GUIInterface {
 
-	String fileContent;
-	String filePath;
+	private String fileContent;
+	private String filePath;
 
-	String mainPC = "null";
-
-
-	private static final String TITLESTRING = "EXECUTE MODE";
-	public static final Font CONTENTFONT = new Font("TIMES NEW ROMAN", Font.BOLD, 16);
+	private String mainPC = "null";
 
 	JLabel contents;
 	JLabel titleLabel;
@@ -50,9 +47,10 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	JTextArea contentArea;
 	JButton[] DirectoryBotton;
 
+	String StatusLabel = "label";
+
 	public ExecuteFrame(String filePath_) throws IOException {
-		filePath = filePath_;
-		fileContent = FileReader.FileReading(filePath);
+		readSettingFile();
 
 		settingWindow();
 
@@ -73,6 +71,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	public ExecuteFrame(List<String> filePath_) {
 
+		readSettingFile();
+		System.out.println(mainPC);
 		System.out.println(filePath_.get(0));
 		//System.out.println(filePath_.get(1));
 
@@ -97,6 +97,15 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		setVisible(true);
 	}
 
+	private void readSettingFile(){
+
+		try {
+			List<String> ret = FileReader.FileReadingAsArray(ExeConstants.SETTING_FILE);
+			 mainPC = ret.get(0).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+		} catch (IOException e) {
+			mainPC = null;
+		}
+	}
 
 	private void initRunButton() {
 		JPanel runButtonPanel = new JPanel();
@@ -107,9 +116,17 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		runButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-
-
+				ProcessBuilder builder = new ProcessBuilder("sh","setting.sh");
+				try {
+					Runtime r = Runtime.getRuntime();
+					StatusLabel = "EXECUTE";
+					r.exec("/bin/sh  /cygdrive/c/user/hashimoto/lab/2.ソースコード/1.my_src/1.java/eclipse/git/EXPERIMENTS/GUI/Setting.sh");
+					//Process process = builder.start();
+				} catch (IOException e1) {
+					StatusLabel = "false";
+//					e1.printStackTrace();
+				}
+				System.out.println(StatusLabel);
 			}
 		});
 
@@ -170,7 +187,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		TitlejPanel.setBackground(BACKGROUNDCOLOR);
 		TitlejPanel.setLayout(new BoxLayout(TitlejPanel, BoxLayout.Y_AXIS));
 
-		titleLabel = new JLabel(TITLESTRING);
+		titleLabel = new JLabel(ExeConstants.TITLE_STRING);
 		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		titleLabel.setFont(TITLEFONT);
 		titleLabel.setForeground(Color.black);
