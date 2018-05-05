@@ -65,6 +65,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	String ExecuterScript = "null";
 
 	String masterExecuterScript = "null";
+	String slaveExecuterScript = "null";
+
 
 	public ExecuteFrame(String filePath_) throws IOException {
 		readSettingFile();
@@ -153,7 +155,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 			exeJarFile = ret.get(5).split(FileConstants.SETTING_FILE_DELIMITER)[1];
 			MasterSetting = ret.get(6).split(FileConstants.SETTING_FILE_DELIMITER)[1];
 			masterExecuterScript = ret.get(7).split(FileConstants.SETTING_FILE_DELIMITER)[1];
-			System.out.println(masterExecuterScript);
+			slaveExecuterScript= ret.get(8).split(FileConstants.SETTING_FILE_DELIMITER)[1];
 		} catch (IOException e) {
 			mainPC = null;
 		}
@@ -169,6 +171,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		String safe = NetworkConstants.sendFile(sendedname,mainPC);
 		Thread.sleep(WaitTime);
 		System.out.println(safe);
+
 	}
 
 	private void initRunButton() {
@@ -193,9 +196,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 						//Transfer command list
 						for (int i = 0; i < filePaths.size(); i++) {
-	//						SocketTransfer(r,filePaths.get(i) ,"command" + String.valueOf(i + 1)+ ".ini");
-//							System.out.println(filePaths.get(i));
-//filePaths.get(i)							SocketTransfer(r,filePaths.get(i) ,"command" + String.valueOf(i + 1)+ ".ini");
+							SocketTransfer(r,filePaths.get(i) ,"command" + String.valueOf(i + 1)+ ".ini");
 
 						}
 
@@ -203,16 +204,15 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 						SocketTransfer(r, PClistFile);
 
-//						System.out.println(MasterSetting);
-
 						SocketTransfer(r, MasterSetting);
 
 						SocketTransfer(r, masterExecuterScript);
 
+						SocketTransfer(r, slaveExecuterScript);
 
-						r.exec("ssh  " + mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh bishop.cs.osakafu-u.ac.jp'");
-						System.out.println("ssh  " + mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh'");
-
+						System.out.println("ssh " +userName+"@"+ mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh'");
+						r.exec("ssh " +userName+"@"+ mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh'");
+//						System.out.println("ssh  " + mainPC + " " + "'cd hashimoto/JavaGate && sh MasterExecuter.sh'");
 					}
 
 					StatusStr = "SUCCESS";
@@ -221,6 +221,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 					StatusStr = "FALSE";
 					StatusLabel.setText(StatusStr);
 				}
+				System.out.println(StatusStr);
 			}
 		});
 

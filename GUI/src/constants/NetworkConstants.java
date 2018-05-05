@@ -15,6 +15,9 @@ public class NetworkConstants {
 
 	public static final int BUFFER_SIZE = 512;
 
+	public static final int Timeout = 1000000;
+
+
 	public static final String FINISH_STATUS = "###FINISH###";
 
 	public static final String BUSY_STATUS = "###BUSY###";
@@ -79,7 +82,7 @@ public class NetworkConstants {
 		try {
 
 			socket = new Socket(hostName,PORT_NUMBER);
-
+			socket.setSoTimeout(Timeout);
 			inputStream = new FileInputStream(file);
 			outputStream = socket.getOutputStream();
 
@@ -103,7 +106,7 @@ public class NetworkConstants {
 		return sendFile(new File(filepath),hostName);
 	}
 
-	public static String sendMassage(String massage, String hostName) { 
+	public static String sendMassage(String massage, String hostName) {
 		return null;
 	}
 /*

@@ -30,7 +30,7 @@ public class Master {
 			PCName[t] = tempPCList.get(t);
 			Runtime r = Runtime.getRuntime();
 			try {
-				r.exec("sh  " + "MasterSetting.sh" + " " + PCName[t]+" " + "MOMFO.jar"+ " "+ "GUI.jar"+ "SlaveExecute.sh");
+				r.exec("sh  " + "MasterSetting.sh" + " " + PCName[t]+" " + "MOMFO.jar"+ " "+ "GUI.jar"+ " "+"SlaveExecuter.sh");
 			} catch (IOException e) {
 				System.exit(-1);
 			}
