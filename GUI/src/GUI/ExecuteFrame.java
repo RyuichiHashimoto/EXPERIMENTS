@@ -30,7 +30,10 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	String fileContent;
 	String filePath;
-	
+
+	String mainPC = "null";
+
+
 	private static final String TITLESTRING = "EXECUTE MODE";
 	public static final Font CONTENTFONT = new Font("TIMES NEW ROMAN", Font.BOLD, 16);
 
@@ -64,19 +67,19 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		initComponet();
 
 		initRunButton();
-		
+
 		setVisible(true);
 	}
 
 	public ExecuteFrame(List<String> filePath_) {
-	
+
 		System.out.println(filePath_.get(0));
 		//System.out.println(filePath_.get(1));
-		
+
 		filePath = filePath_.get(0);
-		
+
 		fileContent = FileReader.FileReading(filePath);
-	
+
 		settingWindow();
 
 		setIcon();
@@ -84,32 +87,32 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		initlizePanel();
 
 		initTitleLabel();
-		
+
 		initSettingPanel();
-			
+
 		initComponet();
 
 		initRunButton();
-		
+
 		setVisible(true);
 	}
 
-	
+
 	private void initRunButton() {
 		JPanel runButtonPanel = new JPanel();
 		JButton runButton = new JButton("run program");
 		runButtonPanel.add(runButton);
-		
+
 		runButton.setPreferredSize(new Dimension(150, 40));
 		runButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+
+
+
 			}
 		});
-		
+
 		mainPanel.add(runButtonPanel);
 	}
 
