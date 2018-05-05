@@ -38,6 +38,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	private List<String> filePaths;
 	private Long WaitTime = (long) 500;
+	private String MainPC_OSVersion = "null";
 	JLabel contents;
 	JLabel titleLabel;
 	JLabel filePathLabel;
@@ -130,9 +131,12 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	private void readSettingFile() {
 
 		try {
+
 			List<String> ret = FileReader.FileReadingAsArray(ExeConstants.SETTING_FILE);
 			mainPC = ret.get(0).split(FileConstants.SETTING_FILE_DELIMITER)[1];
-			mainScript = ret.get(1).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			MainPC_OSVersion = ret.get(1).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			mainScript = ret.get(2).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+
 		} catch (IOException e) {
 			mainPC = null;
 		}
@@ -153,12 +157,22 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 					StatusLabel.setText(StatusStr);
 					System.out.println(filePaths.size());
 
+
+
 					//
 					for(int i = 0; i < filePaths.size() ; i++){
-						r.exec("sh  " + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
-						Thread.sleep(WaitTime);
-						NetworkConstants.sendFile(filePaths.get(i),mainPC);
-						Thread.sleep(WaitTime);
+
+						if (MainPC_OSVersion.equalsIgnoreCase("win")){
+
+
+
+						} else  if (MainPC_OSVersion.equalsIgnoreCase("lin")){
+							r.exec("sh  " + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
+							Thread.sleep(WaitTime);
+							NetworkConstants.sendFile(filePaths.get(i),mainPC);
+							Thread.sleep(WaitTime);
+						}
+
 					}
 
 					StatusStr = "SUCCESS";
