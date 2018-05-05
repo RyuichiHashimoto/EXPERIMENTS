@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import Network.NetworkConstants;
 import Util.FileReader;
 import constants.ExeConstants;
 import constants.FileConstants;
@@ -33,11 +34,14 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	private String filePath;
 
 	private String mainPC = "null";
+	private String mainScript = "null";
 
+	private List<String> filePaths;
+	private Long WaitTime = (long) 500;
 	JLabel contents;
 	JLabel titleLabel;
 	JLabel filePathLabel;
-
+	JLabel StatusLabel;
 	JPanel TitlejPanel;
 	JPanel SettingPanel;
 
@@ -47,7 +51,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	JTextArea contentArea;
 	JButton[] DirectoryBotton;
 
-	String StatusLabel = "label";
+	String StatusStr = "label";
 
 	public ExecuteFrame(String filePath_) throws IOException {
 		readSettingFile();
@@ -70,12 +74,12 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	}
 
 	public ExecuteFrame(List<String> filePath_) {
-
+		filePaths = filePath_;
 		readSettingFile();
 		System.out.println(mainPC);
 		System.out.println(filePath_.get(0));
-		//System.out.println(filePath_.get(1));
-
+		// System.out.println(filePath_.get(1));
+		StatusStr = "do";
 		filePath = filePath_.get(0);
 
 		fileContent = FileReader.FileReading(filePath);
@@ -88,6 +92,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 		initTitleLabel();
 
+		initStatusLabel();
+
 		initSettingPanel();
 
 		initComponet();
@@ -97,11 +103,36 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		setVisible(true);
 	}
 
-	private void readSettingFile(){
+	private void initStatusLabel() {
+		// Initialzation of the Setting panel
+		SettingPanel = new JPanel(null);
+		SettingPanel.setBackground(BACKGROUNDCOLOR);
+		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
+
+		// initialization of the Steting Label
+		JLabel PCLabel = new JLabel("MainPC:" + mainPC);
+		PCLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		PCLabel.setFont(TITLEFONT);
+		PCLabel.setForeground(Color.black);
+		SettingPanel.add(PCLabel, TITLESIZE);
+
+		// initialization of the Steting Label
+
+		StatusLabel = new JLabel("\ttasl" + StatusLabel);
+		StatusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		StatusLabel.setFont(TITLEFONT);
+		StatusLabel.setForeground(Color.black);
+		SettingPanel.add(StatusLabel, TITLESIZE);
+
+		mainPanel.add(SettingPanel);
+	}
+
+	private void readSettingFile() {
 
 		try {
 			List<String> ret = FileReader.FileReadingAsArray(ExeConstants.SETTING_FILE);
-			 mainPC = ret.get(0).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			mainPC = ret.get(0).split(FileConstants.SETTING_FILE_DELIMITER)[1];
+			mainScript = ret.get(1).split(FileConstants.SETTING_FILE_DELIMITER)[1];
 		} catch (IOException e) {
 			mainPC = null;
 		}
@@ -116,17 +147,26 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		runButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ProcessBuilder builder = new ProcessBuilder("sh","setting.sh");
 				try {
 					Runtime r = Runtime.getRuntime();
-					StatusLabel = "EXECUTE";
-					r.exec("/bin/sh  /cygdrive/c/user/hashimoto/lab/2.ソースコード/1.my_src/1.java/eclipse/git/EXPERIMENTS/GUI/Setting.sh");
-					//Process process = builder.start();
-				} catch (IOException e1) {
-					StatusLabel = "false";
-//					e1.printStackTrace();
+					StatusStr = "EXECUTE";
+					StatusLabel.setText(StatusStr);
+					System.out.println(filePaths.size());
+
+					//
+					for(int i = 0; i < filePaths.size() ; i++){
+						r.exec("sh  " + mainScript +" " + mainPC+" " + "command"+String.valueOf(i+1)+".ini");
+						Thread.sleep(WaitTime);
+						NetworkConstants.sendFile(filePaths.get(i),mainPC);
+						Thread.sleep(WaitTime);
+					}
+
+					StatusStr = "SUCCESS";
+					StatusLabel.setText(StatusStr);
+				} catch (IOException | InterruptedException e1) {
+					StatusStr = "FALSE";
+					StatusLabel.setText(StatusStr);
 				}
-				System.out.println(StatusLabel);
 			}
 		});
 
@@ -149,14 +189,14 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		getContentPane().add(mainPanel);
 	}
 
-	private void initSettingPanel(){
+	private void initSettingPanel() {
 
-		//Initialzation of the Setting panel
+		// Initialzation of the Setting panel
 		SettingPanel = new JPanel(null);
 		SettingPanel.setBackground(BACKGROUNDCOLOR);
 		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
 
-		//initialization of the Steting Label
+		// initialization of the Steting Label
 		filePathLabel = new JLabel(filePath);
 		filePathLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		filePathLabel.setFont(TITLEFONT);
@@ -177,7 +217,6 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 			}
 		});
 		SettingPanel.add(SCButton, TITLESIZE);
-
 
 		mainPanel.add(SettingPanel);
 	}
@@ -219,9 +258,8 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 		setIconImage(new ImageIcon(ICONPATH).getImage());
 	}
 
-
-	//繝励Ο繧ｰ繝ｩ繝�繧貞ｮ溯｣�莠亥ｮ�
-	public void run(){
-		//螳溯｣�莠亥ｮ壹↑縺溘ａ
+	// 繝励Ο繧ｰ繝ｩ繝�繧貞ｮ溯｣�莠亥ｮ�
+	public void run() {
+		// 螳溯｣�莠亥ｮ壹↑縺溘ａ
 	}
 }
