@@ -17,8 +17,8 @@ public class Master {
 	public static void main(String[] args) {
 		System.out.println("dir");
 		Master master = new Master();
-
-
+		
+		
 	}
 
 	public Master(){
