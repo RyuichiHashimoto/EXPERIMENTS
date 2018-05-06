@@ -35,6 +35,8 @@ public class NetworkConstants {
 
 	public static final String CLEAR_STATUS = "###CLEAR###";
 
+	public static final Long WaitTime = (long) 500;
+
 	public static String recieveFile(File file) {
 		System.out.println("start");
 
@@ -74,7 +76,7 @@ public class NetworkConstants {
 	}
 
 	// this is the client method
-	public static String sendFile(File file, String hostName) { 
+	public static String sendFile(File file, String hostName) {
 		byte[] buffer = new byte[BUFFER_SIZE];
 		Socket socket = null;
 		System.out.println("start");
@@ -102,10 +104,15 @@ public class NetworkConstants {
 
 			return ERROR_STATUS;
 		}
+		try {
+			Thread.sleep(NetworkConstants.WaitTime);
+		} catch (InterruptedException e) {
+
+		}
 		return SUCCESS_STATUS;
 	}
 
-	public static String sendFile(String filepath, String hostName) { 
+	public static String sendFile(String filepath, String hostName) {
 		return sendFile(new File(filepath), hostName);
 	}
 
@@ -113,10 +120,10 @@ public class NetworkConstants {
 		return null;
 	}
 
-	
-	
-	public static String sendObject(Object obj, String hostName) {
 
+
+	public static String sendObject(Object obj, String hostName) {
+		System.out.println("sendObject has just started");
 		Socket socket = null;
 		ObjectOutputStream outputStream = null;
 		Container datagram = new Container(obj);
@@ -127,7 +134,7 @@ public class NetworkConstants {
 			socket.setSoTimeout(Timeout);
 
 			outputStream = new ObjectOutputStream(socket.getOutputStream());
-			
+
 			outputStream.writeObject(datagram);
 
 			outputStream.flush();
@@ -135,6 +142,12 @@ public class NetworkConstants {
 			socket.close();
 		} catch (IOException e) {
 			return ERROR_STATUS;
+		}
+
+		try {
+			Thread.sleep(NetworkConstants.WaitTime);
+		} catch (InterruptedException e) {
+
 		}
 		return SUCCESS_STATUS;
 	}
@@ -156,7 +169,7 @@ public class NetworkConstants {
 			inputStream = new ObjectInputStream(socket.getInputStream());
 			ret = (Container) inputStream.readObject();
 
-			
+
 			inputStream.close();
 			socket.close();
 			serverSocket.close();

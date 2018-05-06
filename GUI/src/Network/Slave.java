@@ -10,51 +10,60 @@ public class Slave {
 
 	int numberOfCurrentExe;
 
-	int nowExecounter=0;
+	int nowExecounter = 0;
 
-	int totalCounter=0;
+	int totalCounter = 0;
 
 	String Command = "";
 
-	public Slave() {
-		numberOfCPU = Runtime.getRuntime().availableProcessors();
+	public Slave(int nCPU) {
+		numberOfCPU = nCPU;
 		numberOfCurrentExe = 0;
 		Command = "exe.sh";
 	}
 
-	public void run(){
+	public void run() {
+		boolean endFlag = false;
 
 		do {
+			if (nowExecounter < numberOfCPU) {
 
-			if(nowExecounter <numberOfCPU ){
-				//
-				String massage = "";
+				Container container = NetworkConstants.recieveObject();
 
-				if (massage.equalsIgnoreCase(NetworkConstants.FINISH_STATUS)){
-					break; // end of the program
-				} else if (massage.equalsIgnoreCase(NetworkConstants.FINISH_STATUS)){
+				String status = (String) container.getStatus();
+				String massage = (String) container.get();
 
-				} else if (massage.equalsIgnoreCase(NetworkConstants.FINISH_STATUS)){
+				if ((massage.equalsIgnoreCase(NetworkConstants.FINISH_STATUS))){
+
+					System.out.println("end of "+massage);
+					endFlag = true;
+				} else if (status.equalsIgnoreCase(NetworkConstants.SUCCESS_STATUS)) {
+					System.out.println(status+" " + massage + "	" + NetworkConstants.SUCCESS_STATUS + " " + NetworkConstants.FINISH_STATUS);
+
 					nowExecounter++;
 					totalCounter++;
-					HashMap hash = new HashMap<String,String>();
-					Task task = new Task(Command,totalCounter);
-					(new Thread(task)).start();;
+					HashMap hash = new HashMap<String, String>();
+					Task task = new Task("echo " + massage, totalCounter);
+					(new Thread(task)).start();
+//					System.out.println("echo " + massage);
 					nowExecounter--;
 				}
-			} else {
-				
-
+			}
+			if(endFlag){
+				break;
 			}
 
 		} while (true);
+
+
 	}
 
 	public static void main(String[] args) {
-		Slave slave = new Slave();
+		int maxCPU = Runtime.getRuntime().availableProcessors();
+		int useCPU = Integer.parseInt(args[0]);
+		Slave slave = new Slave(useCPU < maxCPU ? useCPU : maxCPU);
 		slave.run();
+		System.out.println("end");
 	}
-
-
 
 }

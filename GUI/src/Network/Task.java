@@ -25,6 +25,7 @@ public class Task implements Runnable, Serializable {
 
 	public Task(String Command_, int key) {
 		command = Command_;
+		time  = key;
 	}
 
 	public void outputSettingFile(){
@@ -45,6 +46,7 @@ public class Task implements Runnable, Serializable {
 
 		osw = new OutputStreamWriter(fos);
 		bw = new BufferedWriter(osw);
+		setting = getsetting();
 
 		for(String key : setting.keySet()){
 			try {
@@ -54,10 +56,28 @@ public class Task implements Runnable, Serializable {
 			}
 		}
 
+
+		try {
+			bw.flush();
+			bw.close();
+			osw.flush();
+			osw.close();
+			fos.flush();
+			fos.close();
+
+		} catch (IOException e) {
+		}
+
+	}
+	public HashMap<String,String> getsetting(){
+		HashMap<String,String> ret = new HashMap<>();
+		ret.put("crossover", "SBXCrossover");
+		return ret;
 	}
 
 	@Override
 	public void run() {
+
 		Runtime r = Runtime.getRuntime();
 		outputSettingFile();
 		try {
