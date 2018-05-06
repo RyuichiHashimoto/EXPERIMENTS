@@ -5,9 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import Network.Container;
 
 public class NetworkConstants {
 
@@ -16,7 +20,6 @@ public class NetworkConstants {
 	public static final int BUFFER_SIZE = 512;
 
 	public static final int Timeout = 1000000;
-
 
 	public static final String FINISH_STATUS = "###FINISH###";
 
@@ -32,7 +35,7 @@ public class NetworkConstants {
 
 	public static final String CLEAR_STATUS = "###CLEAR###";
 
-	public static String recieveFile(File file){
+	public static String recieveFile(File file) {
 		System.out.println("start");
 
 		byte[] buffer = new byte[BUFFER_SIZE];
@@ -66,12 +69,12 @@ public class NetworkConstants {
 		return SUCCESS_STATUS;
 	}
 
-	public static String recieveFile(String filePath){
+	public static String recieveFile(String filePath) {
 		return recieveFile(new File(filePath));
 	}
 
 	// this is the client method
-	public static String sendFile(File file,String hostName){
+	public static String sendFile(File file, String hostName) { 
 		byte[] buffer = new byte[BUFFER_SIZE];
 		Socket socket = null;
 		System.out.println("start");
@@ -81,7 +84,7 @@ public class NetworkConstants {
 
 		try {
 
-			socket = new Socket(hostName,PORT_NUMBER);
+			socket = new Socket(hostName, PORT_NUMBER);
 			socket.setSoTimeout(Timeout);
 			inputStream = new FileInputStream(file);
 			outputStream = socket.getOutputStream();
@@ -95,55 +98,78 @@ public class NetworkConstants {
 			inputStream.close();
 			socket.close();
 
-		} catch (IOException e){
+		} catch (IOException e) {
 
 			return ERROR_STATUS;
 		}
 		return SUCCESS_STATUS;
 	}
 
-	public static String sendFile(String filepath, String hostName) {
-		return sendFile(new File(filepath),hostName);
+	public static String sendFile(String filepath, String hostName) { 
+		return sendFile(new File(filepath), hostName);
 	}
 
 	public static String sendMassage(String massage, String hostName) {
 		return null;
 	}
-/*
-	public static String sendObject(Object object, String hostName) {
 
-		byte[] buffer = new byte[BUFFER_SIZE];
+	
+	
+	public static String sendObject(Object obj, String hostName) {
+
 		Socket socket = null;
-		System.out.println("start");
-
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
+		ObjectOutputStream outputStream = null;
+		Container datagram = new Container(obj);
 
 		try {
-			socket = new Socket(hostName,PORT_NUMBER);
 
-			inputStream = new ObjectInputStream(object);
-			outputStream = socket.getOutputStream();
+			socket = new Socket(hostName, PORT_NUMBER);
+			socket.setSoTimeout(Timeout);
 
-			int fileLength = 0;
-			while ((fileLength = inputStream.read(buffer)) > 0) {
-				outputStream.write(buffer, 0, fileLength);
-			}
+			outputStream = new ObjectOutputStream(socket.getOutputStream());
+			
+			outputStream.writeObject(datagram);
+
 			outputStream.flush();
 			outputStream.close();
-			inputStream.close();
 			socket.close();
-
 		} catch (IOException e) {
 			return ERROR_STATUS;
 		}
 		return SUCCESS_STATUS;
 	}
-	*/
+
+	public static Container recieveObject() {
+		System.out.println("start");
+
+		ServerSocket serverSocket = null;
+		Socket socket = null;
+		ObjectInputStream inputStream = null;
+		Container ret = null;
+
+		try {
+			serverSocket = new ServerSocket(PORT_NUMBER);
 
 
-	public static String receiveingMassage(File file){
-		return null;
+			socket = serverSocket.accept();
+
+			inputStream = new ObjectInputStream(socket.getInputStream());
+			ret = (Container) inputStream.readObject();
+
+			
+			inputStream.close();
+			socket.close();
+			serverSocket.close();
+			ret.setStatus(SUCCESS_STATUS);
+		} catch (IOException e) {
+			ret = new Container(null);
+			System.out.println();
+			ret.setStatus(ERROR_STATUS);
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e2){
+			ret = new Container(null);
+			ret.setStatus(ERROR_STATUS);
+		}
+		return ret;
 	}
-
 }

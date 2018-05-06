@@ -17,17 +17,34 @@ public class Master {
 	public static void main(String[] args) {
 		System.out.println("dir");
 		Master master = new Master();
+		master.run();
+	}
+	
+	public void run(){
 		
 		
+		do{
+			
+			
+			
+			
+			
+			
+		} while(true);		
 	}
 
 	public Master(){
 		List<String> tempPCList = ReadPCList(MasterConstants.PCListFile);
 
 		PCName = new String[tempPCList.size()];
+		
+		Setting();
+	}
 
-		for(int t = 0; t < tempPCList.size();t++){
-			PCName[t] = tempPCList.get(t);
+
+	private void Setting(){
+
+		for(int t = 0; t < PCName.length;t++){
 			Runtime r = Runtime.getRuntime();
 			try {
 				r.exec("sh  " + "MasterSetting.sh" + " " + PCName[t]+" " + "MOMFO.jar"+ " "+ "GUI.jar"+ " "+"SlaveExecuter.sh");
@@ -38,9 +55,7 @@ public class Master {
 		}
 
 
-
 	}
-
 
 	public List<String> ReadPCList(String filePath){
 		List<String> PCName_ = null;
