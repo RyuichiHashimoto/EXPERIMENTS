@@ -79,6 +79,7 @@ public class Master {
 
 	}
 
+	
 	private void Setting(){
 
 		for(int t = 0; t < PCName.length;t++){

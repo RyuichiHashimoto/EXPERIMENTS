@@ -1,16 +1,27 @@
 package Network;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+
+import Util.FileReader;
 
 public class test implements Serializable{
 
-	String componet ="false";
-
-	public test(String d){
-		componet = d;
+	public HashMap<String,String>[] getHashmap(String filePath){
+		List<String> fileRead = null;
+		try {
+			fileRead = FileReader.FileReadingAsArray(filePath);
+		} catch (IOException e) {
+			return null;
+		}		
+		return decodeSetting(fileRead);
 	}
-
-	public String get(){
-		return componet;
-	}
+	
+	public HashMap<String,String>[] decodeSetting(List<String> filePath){
+		
+		
+		return null;
+	}	
 }
