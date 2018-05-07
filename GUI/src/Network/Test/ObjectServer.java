@@ -1,16 +1,17 @@
 package Network.Test;
 
-import Network.test;
-import constants.NetworkConstants;
+import Network.NetworkConstants;
+import experiments.CommandSetting;
 
 public class ObjectServer {
 
 
 	public static void main(String[] args) {
-		//test suc = new test("d");
-		
-		//NetworkConstants.sendObject(suc, args[0]);
-		
-		//System.out.println();
+		CommandSetting suc = new CommandSetting();
+		suc.put("what", "SUCCESS");
+
+		suc.put("hoge", "mimimimmiimi");
+		NetworkConstants.sendObject(suc, args[0]);
+		System.out.println();
 	}
 }

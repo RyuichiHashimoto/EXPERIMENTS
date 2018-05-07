@@ -1,4 +1,4 @@
-package constants;
+package Network;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,8 +10,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import Network.Container;
 
 public class NetworkConstants {
 

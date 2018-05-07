@@ -1,10 +1,9 @@
-package constants;
+package experiments;
 
 import java.awt.Font;
 
 public class ExeConstants {
 
-	public static final String COMMAND_CONSTRAINT = "======================================COMMAND===========================";
 
 	public static final String EXE_JAR_FILE = "executer.jar";
 

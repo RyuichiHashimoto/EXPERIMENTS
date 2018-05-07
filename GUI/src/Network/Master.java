@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import Util.FileReader;
-import constants.MasterConstants;
-import constants.NetworkConstants;
 
 public class Master {
 

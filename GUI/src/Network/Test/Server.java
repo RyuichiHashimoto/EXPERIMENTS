@@ -1,6 +1,6 @@
 package Network.Test;
 
-import constants.NetworkConstants;
+import Network.NetworkConstants;
 
 public class Server {
 

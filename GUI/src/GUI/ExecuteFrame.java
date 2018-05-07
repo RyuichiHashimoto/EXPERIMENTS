@@ -17,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import Network.NetworkConstants;
+import Util.FileConstants;
 import Util.FileReader;
-import constants.ExeConstants;
-import constants.FileConstants;
-import constants.NetworkConstants;
+import experiments.ExeConstants;
 
 /*
  * Data Fram

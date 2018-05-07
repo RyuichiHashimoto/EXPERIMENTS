@@ -1,10 +1,9 @@
-##enjoiable
-PROBLEMS:CIHS,CIMS,CILS,PIHS,PIMS,PILS,NIHS,NIMS,NILS
-CROSSOVER:SBX,DE
+======================================COMMAND===========================
+PROBLEMS:CIHS
+DistributionIndex:900,00
+CROSSOVER:SBX(Mutation:odasf),DE
 CROSSOVERPROBABILITY:0.9
 SBXDistributionIndex:20
 Mutation:PM
 MutationPROBABILITY:-1
 PMDistributionIndex:20
-OutputDirectory:hashmap,hashmap
-

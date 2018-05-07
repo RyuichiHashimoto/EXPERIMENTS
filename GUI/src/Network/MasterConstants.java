@@ -1,4 +1,4 @@
-package constants;
+package Network;
 
 public class MasterConstants {
 

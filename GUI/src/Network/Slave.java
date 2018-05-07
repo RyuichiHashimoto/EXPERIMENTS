@@ -2,8 +2,6 @@ package Network;
 
 import java.util.HashMap;
 
-import constants.NetworkConstants;
-
 public class Slave {
 
 	final int numberOfCPU;

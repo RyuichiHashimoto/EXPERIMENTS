@@ -9,8 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import constants.NetworkConstants;
-
 public class Task implements Runnable, Serializable {
 
 	private String Status;

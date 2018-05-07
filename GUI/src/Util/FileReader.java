@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constants.FileConstants;
-
 public class FileReader {
 
 	public static List<String> FileReadingAsArray(String filePath) throws IOException {
