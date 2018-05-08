@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import Network.Constants.NetworkConstants;
-import experiments.ExeConstants;
+import lib.experiments.ExeConstants;
 import lib.io.FileConstants;
 import lib.io.input.FileReader;
 

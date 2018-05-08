@@ -1,4 +1,4 @@
-package experiments;
+package lib.experiments;
 
 import static java.lang.Double.*;
 import static java.lang.Math.*;

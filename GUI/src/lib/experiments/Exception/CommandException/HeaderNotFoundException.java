@@ -1,4 +1,4 @@
-package experiments.Exception.CommandException;
+package lib.experiments.Exception.CommandException;
 
 public class HeaderNotFoundException extends CommandException{
 

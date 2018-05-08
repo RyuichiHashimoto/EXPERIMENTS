@@ -1,4 +1,4 @@
-package experiments.Exception.CommandSetting;
+package lib.experiments.Exception.CommandSetting;
 
 public class CommandSettingException extends Exception{
 	

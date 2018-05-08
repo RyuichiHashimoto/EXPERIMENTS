@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 
-import experiments.Numeric;
 import experiments.Exception.CommandSetting.notFoundException;
 import lib.directory.DirectoryMaker;
 import lib.io.FileConstants;
