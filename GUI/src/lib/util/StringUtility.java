@@ -1,6 +1,5 @@
 package lib.util;
 
-import static org.testng.Assert.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -40,7 +39,7 @@ public class StringUtility {
 		sb.append(obj[obj.length - 1]);
 		return sb.toString();
 	}
-
+/*
 	public static void assertEqualString(String str, Path path) throws IOException {
 		List<String> file = Files.readAllLines(path, Charset.defaultCharset());
 		List<String> given = Arrays.asList(str.split("\r\n?|\n"));
@@ -57,7 +56,7 @@ public class StringUtility {
 		i = len;
 		while (i < given.size()) assertTrue(file.get(i).isEmpty(), i +"th line in String.");
 	}
-
+*/
 	/**
 	 * Replaces \r or \r\n to \n. Note that \r\n is always replaced to \n, not to \n\n.
 	 * @param obj

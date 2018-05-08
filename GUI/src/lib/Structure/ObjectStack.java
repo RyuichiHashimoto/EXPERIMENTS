@@ -1,4 +1,4 @@
-package lib.structure;
+package lib.Structure;
 
 import static lib.lang.Generics.*;
 
@@ -148,9 +148,10 @@ public class ObjectStack<T> implements Cloneable {
 
 	@Override
 	public String toString() {
-		return ArrayUtility.toCSV(array_);
+		System.err.println("error");
+		return null;
+		//	return ArrayUtility.toCSV(array_);
 	}
-
 	public void paste(T[] array, int offset) {
 		System.arraycopy(array_, 0, array, offset, size());
 	}
