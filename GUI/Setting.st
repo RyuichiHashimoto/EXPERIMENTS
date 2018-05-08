@@ -1,7 +1,8 @@
 ======================================COMMAND===========================
+Algorith:MOMFEA
 PROBLEMS:CIHS
-DistributionIndex:900,00
-CROSSOVER:SBX(Mutation:odasf),DE
+DistributionIndex:99
+CROSSOVER:SBX,DE
 CROSSOVERPROBABILITY:0.9
 SBXDistributionIndex:20
 Mutation:PM

@@ -1,0 +1,9 @@
+PROBLEMS	CIHS
+SBXDistributionIndex	20
+MutationPROBABILITY	-1
+PMDistributionIndex	20
+CROSSOVERPROBABILITY	0.9
+DistributionIndex	99
+CROSSOVER	DE
+Mutation	PM
+Algorith	MOMFEA

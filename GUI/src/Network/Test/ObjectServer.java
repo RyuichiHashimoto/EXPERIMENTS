@@ -1,7 +1,7 @@
 package Network.Test;
 
-import Network.NetworkConstants;
-import experiments.CommandSetting;
+import Network.CommandSetting;
+import Network.Constants.NetworkConstants;
 
 public class ObjectServer {
 

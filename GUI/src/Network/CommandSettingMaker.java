@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Util.FileConstants;
-import Util.FileReader;
-import experiments.CommandSetting;
 import experiments.Exception.CommandException.HeaderNotFoundException;
+import lib.io.FileConstants;
+import lib.io.FileReader;
 
 public class CommandSettingMaker implements Serializable {
 
@@ -135,8 +134,7 @@ public class CommandSettingMaker implements Serializable {
 			for (int t = 0; t < temphashmaplist.size(); t++) {
 				
 				CommandSetting temp = (CommandSetting) temphashmaplist.get(t).clone();
-				
-				
+					
 				if (splitedcomponet[i].contains("(") && splitedcomponet[i].contains(")")) {
 					System.out.println(splitedcomponet[i]);
 					String MidStr = getMidStr(splitedcomponet[i], "(", ")");
@@ -153,17 +151,13 @@ public class CommandSettingMaker implements Serializable {
 	public static void main(String[] args) {
 		List<CommandSetting> setting = new ArrayList<CommandSetting>();
 
-		// System.out.println("output.dat");
-
 		try {
-			setting = getHashmap("Setting.st");
+			setting = getHashmap("CommandSetting.st");
 			for (int i = 0; i < setting.size(); i++) {
 				setting.get(i).subcriptToFile("output/output" + (i + 1) + ".st");
-				// subscriptHash(setting.get(i).getHashMap());
 			}
 
 		} catch (HeaderNotFoundException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 

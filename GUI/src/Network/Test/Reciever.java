@@ -1,6 +1,6 @@
 package Network.Test;
 
-import Network.NetworkConstants;
+import Network.Constants.NetworkConstants;
 
 public class Reciever {
 

@@ -1,8 +1,8 @@
 package Network.Test;
 
-import Network.Container;
-import Network.NetworkConstants;
-import experiments.CommandSetting;
+import Network.CommandSetting;
+import Network.Constants.NetworkConstants;
+import Network.Container.Container;
 import experiments.Exception.CommandSetting.notFoundException;
 
 public class ObjectReciever {

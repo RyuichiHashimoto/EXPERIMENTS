@@ -17,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import Network.NetworkConstants;
-import Util.FileConstants;
-import Util.FileReader;
+import Network.Constants.NetworkConstants;
 import experiments.ExeConstants;
+import lib.io.FileConstants;
+import lib.io.FileReader;
 
 /*
  * Data Fram
@@ -119,7 +119,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 	}
 
 	private void initStatusLabel() {
-		// Initialzation of the Setting panel
+		// Initialzation of the CommandSetting panel
 		SettingPanel = new JPanel(null);
 		SettingPanel.setBackground(BACKGROUNDCOLOR);
 		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
@@ -246,7 +246,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	private void initSettingPanel() {
 
-		// Initialzation of the Setting panel
+		// Initialzation of the CommandSetting panel
 		SettingPanel = new JPanel(null);
 		SettingPanel.setBackground(BACKGROUNDCOLOR);
 		SettingPanel.setLayout(new BoxLayout(SettingPanel, BoxLayout.X_AXIS));
@@ -300,7 +300,7 @@ public class ExecuteFrame extends JFrame implements GUIInterface {
 
 	public static void main(String[] args) {
 		try {
-			new ExecuteFrame("Setting.st");
+			new ExecuteFrame("CommandSetting.st");
 		} catch (IOException e) {
 			new ErrorFrame(IOERRORTITLE, "Sorry, I cannot found FinalFUN1.dat");
 			// e.printStackTrace();
