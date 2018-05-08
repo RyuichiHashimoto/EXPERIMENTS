@@ -1,4 +1,4 @@
-package Network;
+package lib.experiments;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import experiments.Exception.CommandException.HeaderNotFoundException;
 import lib.io.FileConstants;
-import lib.io.FileReader;
+import lib.io.input.FileReader;
 
 public class CommandSettingMaker implements Serializable {
 

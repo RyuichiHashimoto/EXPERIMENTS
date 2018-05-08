@@ -1,9 +1,11 @@
 package Network.Test;
 
-import Network.CommandSetting;
+import javax.naming.NameNotFoundException;
+
 import Network.Constants.NetworkConstants;
 import Network.Container.Container;
 import experiments.Exception.CommandSetting.notFoundException;
+import lib.experiments.CommandSetting;
 
 public class ObjectReciever {
 
@@ -13,9 +15,9 @@ public class ObjectReciever {
 
 		try {
 			System.out.println(output.getAsStr("what"));
-
-		} catch (notFoundException e) {
-			System.out.println("error");
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		output.subcriptToFile("output/output.dat");
 //		System.out.println(d.getStatus());

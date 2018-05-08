@@ -1,4 +1,4 @@
-package lib.io;
+package lib.io.input;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import lib.io.FileConstants;
 
 public class FileReader {
 

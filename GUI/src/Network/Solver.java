@@ -13,9 +13,10 @@ import javax.naming.NamingException;
 import javax.sound.midi.Sequence;
 
 import Network.GridComputing.asg.cliche.Command;
-import experiments.Generics;
 import experiments.Exception.CommandSetting.CannotConvertException;
 import experiments.Exception.CommandSetting.notFoundException;
+import lib.experiments.CommandSetting;
+import lib.lang.Generics;
 import lib.lang.NeedOverriden;
 
 public abstract class Solver implements Runnable, Buildable {
@@ -84,14 +85,14 @@ public abstract class Solver implements Runnable, Buildable {
 		}
 	}
 
-	public CommandSetting CommandSetting;
+	public CommandSetting Setting;
 	private Throwable thrown_;
 	public ArrayList<SolverResult<?>> results = new ArrayList<>();
 
 	@Override
 	public void build(CommandSetting s) throws NamingException, IOException, ReflectiveOperationException,
 			notFoundException, IllegalArgumentException, CannotConvertException {
-		CommandSetting = s;
+		Setting = s;
 		buildImpl();
 		// instantiate Results
 		String[] resultName = s.getAsSArray(RESULT, RESULT_DELIMITER, new String[0]);
@@ -173,12 +174,12 @@ public abstract class Solver implements Runnable, Buildable {
 
 	@Command
 	public CommandSetting getCommandSetting() {
-		return CommandSetting;
+		return Setting;
 	}
 
 	@Command
 	public Object getCommandSetting(String key) throws NamingException, notFoundException {
-		return CommandSetting.get(key);
+		return Setting.get(key);
 	}
 
 	@Command

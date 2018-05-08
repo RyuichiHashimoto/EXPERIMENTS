@@ -5,9 +5,10 @@ import java.io.IOException;
 
 import javax.naming.NamingException;
 
-import Network.CommandSetting;
 import Network.Solver;
+import experiments.Exception.CommandSetting.CannotConvertException;
 import experiments.Exception.CommandSetting.notFoundException;
+import lib.experiments.CommandSetting;
 
 public class RunSetting {
 	public static final String OUTPUT_DIR = "dir";
@@ -46,7 +47,7 @@ public class RunSetting {
 	}
 
 
-	public static Solver buildSolver(CommandSetting s) throws IOException, NamingException, ReflectiveOperationException, notFoundException {
+	public static Solver buildSolver(CommandSetting s) throws IOException, NamingException, ReflectiveOperationException, notFoundException, IllegalArgumentException, CannotConvertException {
 		// make directory for output
 		StreamProvider sp;
 		if (s.containKey(OUTPUT_DIR)) {

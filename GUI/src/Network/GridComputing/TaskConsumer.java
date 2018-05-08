@@ -14,8 +14,8 @@ public class TaskConsumer extends Thread{
 
 	private Master master;
 
-	public TaskConsumer(Master master){
-		master = master;
+	public TaskConsumer(Master master_){
+		master = master_;
 	}
 
 	public void run(){

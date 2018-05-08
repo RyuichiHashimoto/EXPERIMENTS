@@ -1,5 +1,8 @@
 package Network.GridComputing;
 
+import static Network.GridComputing.RunSetting.SOLVER;
+import static Network.GridComputing.RunSetting.STREAM_PROVIDER;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,11 +11,13 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import Network.CommandSetting;
+import Network.Solver;
+import Network.SolverResult;
 import Network.Constants.NetworkConstants;
+import lib.experiments.CommandSetting;
 
 /*
- * This class manage the assigned tasks to be perormed from a Master node.
+ * This class manage the assigned tasks to be performed from a Master node.
  *
  * @Auther Ryuichi Hashimoto
  */
@@ -33,7 +38,8 @@ public class Slave {
 
 	public static void main(String[] args) throws Exception {
 		Slave slave = new Slave();
-		Socket socket = new Socket(NetworkConstants.MASTER_HOST, NetworkConstants.PORT_NUMBER);
+		Socket socket = new Socket("Doctor", NetworkConstants.PORT_NUMBER);
+//		Socket socket = new Socket(NetworkConstants.MASTER_HOST, NetworkConstants.PORT_NUMBER);
 		ObjectOutputStream oos;
 		SlaveDeadHook deadhook;
 		// notify the unexpected death of salve to the master
@@ -72,13 +78,13 @@ public class Slave {
 			if (thrown == null) {
 				// successfully finished
 				oos.writeObject(SlaveResponse.FINISH);
-				//oos.writeInt(solver_.results.size());
+				oos.writeInt(solver_.results.size());
 
-/*				for (SolverResult<?> r: solver_.results) {
+				for (SolverResult<?> r: solver_.results) {
 					oos.writeObject(r.getMemento());
 					r.close();
 				}
-*/
+
 			} else {
 				// error occurred during the run
 				oos.writeObject(SlaveResponse.EXCEPTION);
@@ -116,8 +122,7 @@ public class Slave {
 		throw new IOException("Unloading failed.");
 	}
 
-//	private ArrayStreamProvider streamProvider_ = new ArrayStreamProvider();
-
+	private ArrayStreamProvider streamProvider_ = new ArrayStreamProvider();
 	private URLClassLoader loader_;
 	private Solver solver_;
 
@@ -126,11 +131,11 @@ public class Slave {
 		loader_ = new URLClassLoader(veco(new URL("jar:file:emoa/emoa.jar!/")));
 		Thread.currentThread().setContextClassLoader(loader_);
 
-	//	solver_ = (Solver) loader_.loadClass(setting.getAsStr(SOLVER)).newInstance();
-	//	setting.put(SOLVER, solver_);
-	//	setting.put(STREAM_PROVIDER, streamProvider_);
-	//	solver_.build(setting);
-	// solver_.throwingRun();
+		solver_ = (Solver) loader_.loadClass(setting.getAsStr(SOLVER)).newInstance();
+		setting.put(SOLVER, solver_);
+		setting.put(STREAM_PROVIDER, streamProvider_);
+		solver_.build(setting);
+	    solver_.throwingRun();
 
 	}
 	public static <T> T[] veco(T ... v) {

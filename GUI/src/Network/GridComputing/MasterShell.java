@@ -22,7 +22,7 @@ public class MasterShell extends WorkerObserver implements ShellManageable {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		Master master = new Master(args[0]);
+		Master master = new Master("d");
 		MasterShell shell = new MasterShell(master);
 		master.addObserver(shell);
 		new Thread(master).start();

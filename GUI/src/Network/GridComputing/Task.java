@@ -1,92 +1,61 @@
 package Network.GridComputing;
 
-import java.io.BufferedWriter;
+import static Network.GridComputing.RunSetting.*;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
 
-import Network.CommandSetting;
-import Network.Constants.NetworkConstants;
+import javax.naming.NamingException;
+
+import Network.SolverResult;
 import experiments.Exception.CommandSetting.notFoundException;
+import lib.experiments.CommandSetting;
 
-public class Task implements Runnable, Serializable {
 
-	protected String Status;
+public class Task implements Serializable {
 
-	CommandSetting setting;
+	// TODO: retry count
+	protected CommandSetting CommandSetting_;
+	public final String taskName;
+	protected String[] resultName;
 
-	protected String mainJarFile = "MOMFO.jar";
-
-	protected int time = 0;
-
-	protected final String command;
-
-	public Task(String Command_, int key) {
-		command = Command_;
-		time  = key;
+	public Task(CommandSetting s) throws NamingException, notFoundException {
+		CommandSetting_ = s.clone();
+		String dirName = s.getAsStr("dir");
+		taskName = new File(dirName).getName() +"/"+ s.getAsStr(NAME_SPACE, "");
+		resultName = s.getAsSArray(RESULT, RESULT_DELIMITER);
 	}
 
-	
-	public void outputSettingFile(){ 
-
-		FileOutputStream fos = null;
-		OutputStreamWriter osw = null;
-		BufferedWriter bw = null;
-
-		try {
-			fos = new FileOutputStream("CommandSetting/setting"+String.valueOf(time)+ ".st");
-		} catch (FileNotFoundException e) {
-			File file = new File("CommandSetting");
-			if(!file.exists())
-				file.mkdir();
-
-			outputSettingFile();
-		}
-
-		osw = new OutputStreamWriter(fos);
-		bw = new BufferedWriter(osw);
-		setting = getSetting();
-
-		for(String key : setting.getKeySet()){
-			try {
-				bw.write(key+":"+ (setting.getAsStr(key)));
-			} catch (IOException | notFoundException e) {
-				Status = "FILEOUTPUT"+NetworkConstants.ERROR_STATUS;
-			}
-		}
-
-
-		try {
-			bw.close();
-			osw.close();
-			fos.close();
-		} catch (IOException e) {
-		}
-
+	public CommandSetting getCommandSetting() {
+		return CommandSetting_;
 	}
 
-	public CommandSetting getSetting(){
-		CommandSetting ret = new CommandSetting();
-		ret.put("crossover", "SBXCrossover");
-		return ret;
+	public void writeResult(Master master, Object[] mementos) throws IOException, NamingException, ReflectiveOperationException {
+		StreamProvider sProvider;
+		if (CommandSetting_.containsKey("dir")) {
+			String dest = CommandSetting_.getAsStr("dir", null);
+			sProvider = new FileStreamProvider(dest);
+		} else {
+			sProvider = new FileStreamProvider();
+		}
+		sProvider = new SpecialFileStreamProvider(sProvider);
+		CommandSetting_.set(STREAM_PROVIDER, sProvider);
+		for (int i = 0; i < mementos.length; i++) {
+			save(master, resultName[i], mementos[i]);
+		}
 	}
+
+	protected void save(Master master, String cls, Object ... mementos) throws IOException, NamingException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		SolverResult<?> result = master.loader.newInstance(cls);
+		result.save(CommandSetting_, mementos);
+		result = null; // for unloading. (this is maybe unnecessary)
+	}
+
+	public void errorHappened() {}
 
 	@Override
-	public void run() {
-
-		Runtime r = Runtime.getRuntime();
-		outputSettingFile();
-		try {
-			r.exec(command);
-			Status = NetworkConstants.SUCCESS_STATUS;
-		} catch (IOException e) {
-			Status = NetworkConstants.ERROR_STATUS;
-		} catch (SecurityException e) {
-			Status = NetworkConstants.ERROR_STATUS;
-		}
+	public String toString() {
+		return taskName;
 	}
-
 }

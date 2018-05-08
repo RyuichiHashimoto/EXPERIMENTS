@@ -1,6 +1,5 @@
 package lib.lang;
 
-import static lib.lang.CallHierarchy.*;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -68,11 +67,7 @@ public class PathTreat {
 		}
 	}
 
-	/**
-	 * Returns the directory where the caller of this method resides
-	 * as a class file.
-	 * @return directory where the class file resides
-	 */
+	/*
 	public static File getClassPos() {
 		return getCallerClassDir();
 	}
@@ -80,11 +75,6 @@ public class PathTreat {
 	public static String getClassPosStr() {
 		return getCallerClassDir().getAbsolutePath();
 	}
-
-	/**
-	 * Converts a relative path from the class file into File object.
-	 * Similar to {@link Class#getResource(String)}, but returns File object.
-	 */
 	public static File relativeToFile(String path) {
 		return new File(getCallerClassDir(), path);
 	}
@@ -92,4 +82,5 @@ public class PathTreat {
 	public static String relativePath(String path) {
 		return getCallerClassDir().getAbsolutePath() + "/"+ path;
 	}
+	*/
 }

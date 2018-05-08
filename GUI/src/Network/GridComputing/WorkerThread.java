@@ -12,7 +12,7 @@ import java.util.Observable;
 
 import javax.naming.NamingException;
 
-import Network.CommandSetting;
+import lib.experiments.CommandSetting;
 
 
 /**
@@ -71,13 +71,14 @@ public class WorkerThread extends Observable implements Runnable {
 			throw new IllegalStateException(
 					"Call start() in this class not via Thread.");
 		}
+		
 		try {
 			runImpl();
 		} catch (Throwable t) {
 			// irregular termination
 			errorCause_ = t;
 			setChanged();
-			notifyObservers(SLAVE_DEAD);
+			notifyObservers(SLAVE_DEAD);			
 		}
 	}
 
@@ -85,9 +86,9 @@ public class WorkerThread extends Observable implements Runnable {
 		try (
 				ObjectInputStream ois = new ObjectInputStream(slaveSocket_.getInputStream());
 				ObjectOutputStream oos = new ObjectOutputStream(slaveSocket_.getOutputStream());){
-
-			// start communication
+			
 			communicate(ois, oos);
+			
 			// kill this thread
 			oos.writeObject(TERMINATER);
 			oos.flush();
@@ -111,7 +112,7 @@ public class WorkerThread extends Observable implements Runnable {
 				// master#shutdown() is invoked
 				continue;
 			}
-			oos.writeObject(task_.getSetting());
+			oos.writeObject(task_.getCommandSetting());
 			oos.flush();
 			receiveResult(ois);
 			oos.reset();

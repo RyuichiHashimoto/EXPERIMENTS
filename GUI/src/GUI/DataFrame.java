@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import lib.io.FileReader;
+import lib.io.input.FileReader;
 
 /*
  * Data Fram

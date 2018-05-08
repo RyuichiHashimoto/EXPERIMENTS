@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
 import Network.Constants.NetworkConstants;
 import experiments.ExeConstants;
 import lib.io.FileConstants;
-import lib.io.FileReader;
+import lib.io.input.FileReader;
 
 /*
  * Data Fram

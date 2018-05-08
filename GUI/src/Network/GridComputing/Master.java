@@ -3,6 +3,7 @@ package Network.GridComputing;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import Network.Constants.NetworkConstants;
-import lib.io.FileReader;
+import lib.io.input.FileReader;
 
 /*
  * This class provides the tasks to be solved to slave nodes.
@@ -22,7 +23,8 @@ import lib.io.FileReader;
  */
 
 public class Master extends WorkerObserver implements Runnable{
-
+	public final MasterLoader loader;
+	private static final String JAR_PATH = "jar:file:master/emoa.jar!/";
 	private String[] PCName;
 	private ServerSocket slaveAcceptor;
 	private TaskConsumer consumer;
@@ -39,8 +41,7 @@ public class Master extends WorkerObserver implements Runnable{
 	public static void main(String[] args) throws IOException {
 		System.out.println("dir");
 		Master master = new Master(args[0]);
-//		master.execute();
-//		master.run();
+
 		System.out.println("end");
 	}
 
@@ -83,16 +84,13 @@ public class Master extends WorkerObserver implements Runnable{
 	}
 
 	public Master(String settingFilePath) throws IOException{
-		//loader = new MasterLoader(new URL(JAR_PATH));
+		loader = new MasterLoader(new URL(JAR_PATH));
 		nExecuting = new AtomicInteger();
 		threads = new CopyOnWriteArraySet<WorkerThread>();
 		tasks = new LinkedBlockingDeque<Task>();
 		observers = new ArrayList<WorkerObserver>();
 		observers.add(this);
-		slaveAcceptor = new ServerSocket(NetworkConstants.PORT_NUMBER);
-
-		
-		
+		slaveAcceptor = new ServerSocket(NetworkConstants.PORT_NUMBER);		
 //		ReadPCList(settingFilePath);
 //		Setting();
 	}
@@ -226,11 +224,13 @@ public class Master extends WorkerObserver implements Runnable{
 		try {
 			while (isAlive()) {
 				try {
+					
 					// accept a new slave and create a worker thread
 					WorkerThread wt = new WorkerThread(slaveAcceptor.accept(), this);
 					threads.add(wt);
 					wt.start();
 				} catch (IOException e) {
+					System.out.println("output");
 					// failed to accept slave
 					// or the stream is closed in shutdown() to finish the thread
 				}
