@@ -1,7 +1,6 @@
 package Network.GridComputing;
 
-import static Network.GridComputing.RunSetting.SOLVER;
-import static Network.GridComputing.RunSetting.STREAM_PROVIDER;
+import static Network.GridComputing.RunSetting.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

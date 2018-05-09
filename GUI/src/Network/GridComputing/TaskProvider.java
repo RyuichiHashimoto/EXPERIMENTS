@@ -1,6 +1,6 @@
 package Network.GridComputing;
 
-import static Network.GridComputing.RunSetting.NUMBER_OF_RUNS;
+import static Network.GridComputing.RunSetting.*;
 
 import java.io.File;
 import java.io.ObjectOutputStream;

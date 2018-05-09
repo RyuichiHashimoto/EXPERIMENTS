@@ -9,8 +9,8 @@ import java.io.Serializable;
 import javax.naming.NamingException;
 
 import Network.SolverResult;
-import experiments.Exception.CommandSetting.notFoundException;
 import lib.experiments.CommandSetting;
+import lib.experiments.Exception.CommandSetting.notFoundException;
 
 
 public class Task implements Serializable {

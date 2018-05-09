@@ -1,15 +1,13 @@
 package Network.GridComputing;
 
-import static Network.GridComputing.RunSetting.NUMBER_OF_RUNS;
-import static Network.GridComputing.RunSetting.SEED_OFFSET;
-import static Network.GridComputing.RunSetting.STREAM_PROVIDER;
+import static Network.GridComputing.RunSetting.*;
 
 import java.io.IOException;
 
 import javax.naming.NamingException;
 
-import experiments.Exception.CommandSetting.notFoundException;
 import lib.experiments.CommandSetting;
+import lib.experiments.Exception.CommandSetting.notFoundException;
 import lib.misc.SerialVersion;
 import lib.misc.Variable;
 import lib.util.StringUtility;

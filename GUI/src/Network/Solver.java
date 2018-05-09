@@ -13,9 +13,9 @@ import javax.naming.NamingException;
 import javax.sound.midi.Sequence;
 
 import Network.GridComputing.asg.cliche.Command;
-import experiments.Exception.CommandSetting.CannotConvertException;
-import experiments.Exception.CommandSetting.notFoundException;
 import lib.experiments.CommandSetting;
+import lib.experiments.Exception.CommandSetting.CannotConvertException;
+import lib.experiments.Exception.CommandSetting.notFoundException;
 import lib.lang.Generics;
 import lib.lang.NeedOverriden;
 

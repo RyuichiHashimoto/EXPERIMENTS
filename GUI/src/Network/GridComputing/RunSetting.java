@@ -6,9 +6,9 @@ import java.io.IOException;
 import javax.naming.NamingException;
 
 import Network.Solver;
-import experiments.Exception.CommandSetting.CannotConvertException;
-import experiments.Exception.CommandSetting.notFoundException;
 import lib.experiments.CommandSetting;
+import lib.experiments.Exception.CommandSetting.CannotConvertException;
+import lib.experiments.Exception.CommandSetting.notFoundException;
 
 public class RunSetting {
 	public static final String OUTPUT_DIR = "dir";
@@ -47,7 +47,7 @@ public class RunSetting {
 	}
 
 
-	public static Solver buildSolver(CommandSetting s) throws IOException, NamingException, ReflectiveOperationException, notFoundException, IllegalArgumentException, CannotConvertException {
+	public static Solver buildSolver(CommandSetting s) throws notFoundException, IllegalArgumentException, CannotConvertException, NamingException, IOException, ReflectiveOperationException  {
 		// make directory for output
 		StreamProvider sp;
 		if (s.containKey(OUTPUT_DIR)) {
@@ -61,6 +61,7 @@ public class RunSetting {
 		Solver solver = (Solver) s.getAsInstance(SOLVER);
 		s.put(SOLVER, solver);
 		solver.build(s);
+
 		return solver;
 	}
 }
